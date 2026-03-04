@@ -9,7 +9,7 @@ const TRUST_JSON_LD = {
   name: "MetaTerminal",
   url: "https://metaterminal.app",
   description:
-    "MetaTerminal is a Trader Protection OS trusted by over 3000 traders across 40+ countries. It detects emotional trading patterns in real-time and automatically blocks dangerous trades.",
+    "MetaTerminal is a Trader Protection OS trusted by over 3,000 traders across 40+ countries. It detects emotional trading patterns in real-time and automatically blocks dangerous trades.",
   areaServed: "Worldwide",
   knowsAbout: [
     "Trading Psychology",
@@ -106,7 +106,6 @@ const STAT_CARDS = [
 const PLATFORMS = [
   {
     name: "MetaTrader 4",
-    abbr: "MT4",
     icon: (
       <svg viewBox="0 0 32 32" aria-hidden="true" width="20" height="20" fill="none">
         <rect width="32" height="32" rx="8" fill="rgba(94,240,168,0.15)" />
@@ -116,7 +115,6 @@ const PLATFORMS = [
   },
   {
     name: "MetaTrader 5",
-    abbr: "MT5",
     icon: (
       <svg viewBox="0 0 32 32" aria-hidden="true" width="20" height="20" fill="none">
         <rect width="32" height="32" rx="8" fill="rgba(167,139,250,0.15)" />
@@ -126,7 +124,6 @@ const PLATFORMS = [
   },
   {
     name: "cTrader",
-    abbr: "cT",
     icon: (
       <svg viewBox="0 0 32 32" aria-hidden="true" width="20" height="20" fill="none">
         <rect width="32" height="32" rx="8" fill="rgba(94,240,168,0.15)" />
@@ -136,7 +133,6 @@ const PLATFORMS = [
   },
   {
     name: "TradingView",
-    abbr: "TV",
     icon: (
       <svg viewBox="0 0 32 32" aria-hidden="true" width="20" height="20" fill="none">
         <rect width="32" height="32" rx="8" fill="rgba(245,197,66,0.15)" />
@@ -146,12 +142,58 @@ const PLATFORMS = [
   },
 ];
 
-/* ─── Easing ─────────────────────────────────────────────────────────────── */
-function elasticEaseOut(t: number): number {
-  if (t === 0 || t === 1) return t;
-  const p = 0.4;
-  const s = p / 4;
-  return Math.pow(2, -10 * t) * Math.sin(((t - s) * (2 * Math.PI)) / p) + 1;
+/* ─── Scramble Counter ──────────────────────────────────────────────────── */
+const DIGITS = "0123456789";
+
+function scrambleAnimate(
+  el: HTMLSpanElement,
+  target: number,
+  format: (n: number) => string,
+  duration = 2400,
+) {
+  const SCRAMBLE_END = 0.52; // first 52% rapid random digits
+  // Throttle random-character generation to ~30 fps to avoid excessive Math.random() calls
+  const SCRAMBLE_INTERVAL = 1000 / 30;
+  const start = performance.now();
+  let lastScramble = 0;
+
+  const frame = (now: number) => {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+
+    if (progress >= 1) {
+      el.textContent = format(target);
+      el.classList.add("trust-num-settled");
+      return;
+    }
+
+    if (progress < SCRAMBLE_END) {
+      // Slot-machine phase: throttled random digit cycling
+      if (now - lastScramble >= SCRAMBLE_INTERVAL) {
+        lastScramble = now;
+        const scrambleRatio = progress / SCRAMBLE_END;
+        const targetStr = format(target);
+        el.textContent = targetStr
+          .split("")
+          .map((char) => {
+            if (char >= "0" && char <= "9" && Math.random() > scrambleRatio * 0.85) {
+              return DIGITS[Math.floor(Math.random() * 10)];
+            }
+            return char;
+          })
+          .join("");
+      }
+    } else {
+      // Count-up phase: smooth cubic ease to final value
+      const countProgress = (progress - SCRAMBLE_END) / (1 - SCRAMBLE_END);
+      const eased = 1 - Math.pow(1 - countProgress, 3);
+      el.textContent = format(Math.round(eased * target));
+    }
+
+    requestAnimationFrame(frame);
+  };
+
+  requestAnimationFrame(frame);
 }
 
 /* ─── Main Component ─────────────────────────────────────────────────────── */
@@ -162,16 +204,40 @@ export default function TrustSection() {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const countedRef = useRef(false);
 
-  const setCounterRef = useCallback((i: number) => (el: HTMLSpanElement | null) => {
-    counterRefs.current[i] = el;
-  }, []);
+  const setCounterRef = useCallback(
+    (i: number) => (el: HTMLSpanElement | null) => {
+      counterRefs.current[i] = el;
+    },
+    [],
+  );
 
-  /* Ticker animation */
+  /* ── 3D tilt handlers ── */
+  const handleCardMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = e.currentTarget;
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(700px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateY(-8px) scale(1.02)`;
+      card.style.transition = "transform 0.06s linear";
+    },
+    [],
+  );
+
+  const handleCardMouseLeave = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const card = e.currentTarget;
+      card.style.transform = "";
+      card.style.transition = "transform 0.45s cubic-bezier(0.23,1,0.32,1), box-shadow 0.45s ease";
+    },
+    [],
+  );
+
+  /* ── Ticker RAF animation ── */
   useEffect(() => {
     const el = tickerRef.current;
     if (!el) return;
 
-    // Check reduced motion preference
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
@@ -191,15 +257,17 @@ export default function TrustSection() {
     return () => cancelAnimationFrame(animFrameRef.current);
   }, []);
 
-  /* Counter animation via IntersectionObserver */
+  /* ── Scramble counters via IntersectionObserver ── */
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReduced) {
-      // Immediately set final values
       STAT_CARDS.forEach((card, i) => {
         const el = counterRefs.current[i];
-        if (el) el.textContent = card.format(card.target);
+        if (el) {
+          el.textContent = card.format(card.target);
+          el.classList.add("trust-num-settled");
+        }
       });
       return;
     }
@@ -211,39 +279,23 @@ export default function TrustSection() {
       (entries) => {
         if (entries[0].isIntersecting && !countedRef.current) {
           countedRef.current = true;
-          const duration = 2200;
-          const start = performance.now();
-
-          const animate = (now: number) => {
-            const elapsed = now - start;
-            const rawProgress = Math.min(elapsed / duration, 1);
-            const progress = elasticEaseOut(rawProgress);
-
-            STAT_CARDS.forEach((card, i) => {
-              const el = counterRefs.current[i];
-              if (!el) return;
-              const current = Math.round(progress * card.target);
-              el.textContent = card.format(current);
-            });
-
-            if (rawProgress < 1) {
-              requestAnimationFrame(animate);
-            }
-          };
-
-          requestAnimationFrame(animate);
+          STAT_CARDS.forEach((card, i) => {
+            const el = counterRefs.current[i];
+            if (!el) return;
+            setTimeout(() => {
+              scrambleAnimate(el, card.target, card.format, 2400);
+            }, i * 160);
+          });
           observerRef.current?.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
 
     observerRef.current.observe(section);
-
     return () => observerRef.current?.disconnect();
   }, []);
 
-  // Doubled ticker events for seamless loop
   const allEvents = [...TICKER_EVENTS, ...TICKER_EVENTS];
 
   return (
@@ -257,14 +309,20 @@ export default function TrustSection() {
         className="trust-section"
         aria-label="Social Proof — Trusted by Traders Around the World"
       >
-        {/* Separator line */}
-        <div className="trust-separator" aria-hidden="true" />
+        {/* Cinematic fog — smooth gradient transition from Hero, no hard line */}
+        <div className="trust-fog" aria-hidden="true" />
 
-        {/* Cinematic background glows */}
+        {/* Command-Center dot-grid background */}
+        <div className="trust-grid-bg" aria-hidden="true" />
+
+        {/* Animated horizontal scan line */}
+        <div className="trust-scan-line" aria-hidden="true" />
+
+        {/* Ambient background glows */}
         <div className="trust-glows" aria-hidden="true">
           <div className="trust-glow trust-glow-purple" />
           <div className="trust-glow trust-glow-green" />
-          <div className="trust-glow trust-glow-purple-right" />
+          <div className="trust-glow trust-glow-gold" />
         </div>
 
         {/* Badge */}
@@ -282,7 +340,8 @@ export default function TrustSection() {
 
         {/* Subtitle */}
         <p className="trust-sub">
-          <strong>3,000+ traders</strong> across <strong>40+ countries</strong> trust MetaTerminal to protect their accounts from emotional trading decisions.
+          <strong>3,000+ traders</strong> across <strong>40+ countries</strong>{" "}
+          trust MetaTerminal to protect their accounts from emotional trading decisions.
         </p>
 
         {/* Platform Badges */}
@@ -293,23 +352,43 @@ export default function TrustSection() {
               <span className="trust-platform-name">{p.name}</span>
             </div>
           ))}
-          <p className="trust-platform-sub">
-            over 3,000 trusted users
-          </p>
+          <p className="trust-platform-sub">over 3,000 trusted users</p>
         </div>
 
-        {/* Stat Cards */}
+        {/* Stat Cards — Command Center style */}
         <div className="trust-stats" role="list" aria-label="MetaTerminal statistics">
           {STAT_CARDS.map((card, i) => (
             <div
               key={card.label}
               className="trust-stat-card"
               role="listitem"
-              style={{ "--card-color": card.color } as React.CSSProperties}
+              style={
+                {
+                  "--card-color": card.color,
+                  "--card-delay": `${i * 0.14}s`,
+                } as React.CSSProperties
+              }
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
             >
+              {/* Animated gradient border overlay */}
+              <div className="trust-card-border" aria-hidden="true" />
+
+              {/* Corner bracket decorations */}
+              <div className="trust-card-corner trust-card-corner-tl" aria-hidden="true" />
+              <div className="trust-card-corner trust-card-corner-br" aria-hidden="true" />
+
+              {/* Terminal-style header dots */}
+              <div className="trust-card-header" aria-hidden="true">
+                <span className="trust-card-hdot" style={{ background: card.color }} />
+                <span className="trust-card-hdot trust-card-hdot-dim" />
+                <span className="trust-card-hdot trust-card-hdot-dim" />
+              </div>
+
               <div className="trust-stat-icon" aria-hidden="true" style={{ color: card.color }}>
                 {card.icon}
               </div>
+
               <span
                 className="trust-stat-number"
                 style={{ color: card.color }}
@@ -318,7 +397,9 @@ export default function TrustSection() {
               >
                 {card.format(0)}
               </span>
+
               <span className="trust-stat-label">{card.label}</span>
+
               <svg
                 className="trust-stat-mini-chart"
                 viewBox="0 0 160 24"
@@ -334,22 +415,32 @@ export default function TrustSection() {
                   strokeLinecap="round"
                 />
               </svg>
+
+              {/* Live data indicator */}
+              <div className="trust-card-live" aria-hidden="true">
+                <span
+                  className="trust-card-live-dot"
+                  style={{ background: card.color }}
+                />
+                <span className="trust-card-live-text">LIVE</span>
+              </div>
             </div>
           ))}
         </div>
 
         {/* Live Ticker */}
         <div className="trust-ticker-wrap" aria-hidden="true">
+          <div className="trust-ticker-label">
+            <span className="trust-ticker-live-dot" />
+            LIVE FEED
+          </div>
           <div className="trust-ticker-fade-left" />
           <div className="trust-ticker-fade-right" />
           <div className="trust-ticker-track">
             <div className="trust-ticker-inner" ref={tickerRef}>
               {allEvents.map((ev, idx) => (
                 <div key={idx} className="trust-ticker-event">
-                  <span
-                    className="trust-ticker-dot"
-                    style={{ background: ev.color }}
-                  />
+                  <span className="trust-ticker-dot" style={{ background: ev.color }} />
                   <span className="trust-ticker-text">{ev.text}</span>
                   <span className="trust-ticker-detail">· {ev.detail}</span>
                   <span className="trust-ticker-sep" aria-hidden="true">✦</span>
