@@ -921,3 +921,547 @@ body {
   .chart-pulse-dot { animation: none; }
   .shield-icon-wrap { animation: none; }
 }
+
+/* ============================================================
+   TRUST SECTION — Keyframe Animations
+   ============================================================ */
+
+@keyframes trustGrad {
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
+}
+
+@keyframes trustPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: 0.3; transform: scale(0.85); }
+}
+
+@keyframes trustFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes trustShine {
+  from { transform: translateX(-100%) skewX(-20deg); }
+  to   { transform: translateX(300%) skewX(-20deg); }
+}
+
+/* ============================================================
+   TRUST SECTION — Layout
+   ============================================================ */
+
+.trust-section {
+  position: relative;
+  background-color: #121116;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 80px 20px 80px;
+  overflow: hidden;
+  gap: 40px;
+}
+
+@media (min-width: 769px) {
+  .trust-section { padding: 90px 32px 90px; }
+}
+
+@media (min-width: 1025px) {
+  .trust-section { padding: 100px 40px 100px; gap: 48px; }
+}
+
+@media (min-width: 1301px) {
+  .trust-section { padding: 100px 60px 100px; gap: 56px; }
+}
+
+/* ============================================================
+   TRUST SEPARATOR
+   ============================================================ */
+
+.trust-separator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(120,90,255,0.6) 25%,
+    rgba(94,240,168,0.6) 50%,
+    rgba(120,90,255,0.3) 75%,
+    transparent 100%
+  );
+}
+
+/* ============================================================
+   TRUST BACKGROUND GLOWS
+   ============================================================ */
+
+.trust-glows {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.trust-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+}
+
+.trust-glow-purple {
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(120,90,255,0.9) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+}
+
+.trust-glow-green {
+  width: 500px;
+  height: 350px;
+  background: radial-gradient(ellipse, rgba(94,240,168,0.9) 0%, transparent 70%);
+  bottom: 0;
+  right: -80px;
+  opacity: 0.12;
+}
+
+.trust-glow-purple-right {
+  width: 400px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(167,139,250,0.9) 0%, transparent 70%);
+  top: 30%;
+  right: -60px;
+  opacity: 0.10;
+}
+
+/* ============================================================
+   TRUST BADGE
+   ============================================================ */
+
+.trust-badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(120,90,255,0.4);
+  background: rgba(120,90,255,0.12);
+  color: #c4b5fd;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  animation: trustFadeUp 0.6s ease both;
+  animation-delay: 0.1s;
+}
+
+.trust-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #a78bfa;
+  flex-shrink: 0;
+  animation: trustPulse 2s infinite;
+}
+
+/* ============================================================
+   TRUST HEADING
+   ============================================================ */
+
+.trust-h2 {
+  position: relative;
+  z-index: 1;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  animation: trustFadeUp 0.6s ease both;
+  animation-delay: 0.2s;
+}
+
+.trust-h2-white {
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.5);
+  display: block;
+}
+
+.trust-h2-gradient {
+  display: block;
+  background: linear-gradient(135deg, #c4b5fd 0%, #785aff 35%, #5ef0a8 70%, #8dfdd6 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: trustFadeUp 0.6s ease both, trustGrad 6s ease infinite;
+  animation-delay: 0.2s, 0s;
+  filter: drop-shadow(0 2px 12px rgba(120,90,255,0.2));
+}
+
+@media (min-width: 481px)  { .trust-h2 { font-size: 40px; } }
+@media (min-width: 769px)  { .trust-h2 { font-size: 50px; } }
+@media (min-width: 1025px) { .trust-h2 { font-size: 58px; } }
+@media (min-width: 1301px) { .trust-h2 { font-size: 64px; } }
+
+/* ============================================================
+   TRUST SUBTITLE
+   ============================================================ */
+
+.trust-sub {
+  position: relative;
+  z-index: 1;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.72);
+  max-width: 580px;
+  animation: trustFadeUp 0.6s ease both;
+  animation-delay: 0.35s;
+}
+
+.trust-sub strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+@media (min-width: 769px) {
+  .trust-sub { font-size: 16px; max-width: 640px; }
+}
+
+/* ============================================================
+   TRUST PLATFORMS
+   ============================================================ */
+
+.trust-platforms {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  animation: trustFadeUp 0.6s ease both;
+  animation-delay: 0.5s;
+  width: 100%;
+  flex-direction: column;
+}
+
+@media (min-width: 481px) {
+  .trust-platforms {
+    flex-direction: row;
+  }
+}
+
+.trust-platform-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  cursor: default;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trust-platform-badge:hover {
+  border-color: rgba(120,90,255,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(120,90,255,0.18);
+}
+
+.trust-platform-icon {
+  display: flex;
+  align-items: center;
+}
+
+.trust-platform-sub {
+  width: 100%;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+@media (min-width: 481px) {
+  .trust-platform-sub {
+    width: auto;
+    flex-basis: 100%;
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   TRUST STAT CARDS
+   ============================================================ */
+
+.trust-stats {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 960px;
+  animation: trustFadeUp 0.6s ease both;
+  animation-delay: 0.65s;
+}
+
+@media (min-width: 481px) {
+  .trust-stats {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.trust-stat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 28px 20px 20px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.09);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+
+/* Top gradient line */
+.trust-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--card-color, #fff), transparent);
+  opacity: 0.7;
+}
+
+/* Shine sweep on hover */
+.trust-stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+  transform: translateX(-100%) skewX(-20deg);
+  pointer-events: none;
+}
+
+.trust-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+.trust-stat-card:hover::after {
+  animation: trustShine 0.6s ease forwards;
+}
+
+.trust-stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+
+.trust-stat-number {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  display: block;
+}
+
+@media (min-width: 481px) {
+  .trust-stat-number { font-size: 36px; }
+}
+
+@media (min-width: 769px) {
+  .trust-stat-number { font-size: 44px; }
+}
+
+@media (min-width: 1025px) {
+  .trust-stat-number { font-size: 50px; }
+}
+
+.trust-stat-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.4;
+  max-width: 140px;
+}
+
+.trust-stat-mini-chart {
+  width: 100%;
+  height: 20px;
+  margin-top: 4px;
+}
+
+/* ============================================================
+   TRUST LIVE TICKER
+   ============================================================ */
+
+.trust-ticker-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+  animation: trustFadeUp 0.6s ease both;
+  animation-delay: 0.8s;
+}
+
+.trust-ticker-fade-left,
+.trust-ticker-fade-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.trust-ticker-fade-left {
+  left: 0;
+  background: linear-gradient(to right, #121116 0%, transparent 100%);
+}
+
+.trust-ticker-fade-right {
+  right: 0;
+  background: linear-gradient(to left, #121116 0%, transparent 100%);
+}
+
+.trust-ticker-track {
+  overflow: hidden;
+  width: 100%;
+  padding: 12px 0;
+}
+
+.trust-ticker-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.trust-ticker-event {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 28px;
+}
+
+.trust-ticker-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.trust-ticker-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+}
+
+.trust-ticker-detail {
+  font-size: 12px;
+  color: rgba(255,255,255,0.42);
+}
+
+.trust-ticker-sep {
+  font-size: 8px;
+  color: rgba(255,255,255,0.2);
+  padding-left: 14px;
+}
+
+/* ============================================================
+   TRUST BOTTOM CTA
+   ============================================================ */
+
+.trust-cta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: trustFadeUp 0.6s ease both;
+  animation-delay: 0.95s;
+}
+
+.trust-cta-text {
+  font-size: 15px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+}
+
+.trust-cta-text strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.trust-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: 1px solid rgba(120,90,255,0.5);
+  background: rgba(120,90,255,0.1);
+  color: #c4b5fd;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trust-cta-btn:hover {
+  border-color: rgba(120,90,255,0.85);
+  background: rgba(120,90,255,0.22);
+  color: #e9d5ff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(120,90,255,0.28);
+}
+
+.trust-cta-arrow {
+  transition: transform 0.2s ease;
+}
+
+.trust-cta-btn:hover .trust-cta-arrow {
+  transform: translateX(3px);
+}
+
+/* ============================================================
+   TRUST — PREFERS-REDUCED-MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .trust-badge,
+  .trust-h2,
+  .trust-h2-gradient,
+  .trust-sub,
+  .trust-platforms,
+  .trust-stats,
+  .trust-ticker-wrap,
+  .trust-cta { animation: none; opacity: 1; transform: none; }
+  .trust-badge-dot { animation: none; }
+  .trust-ticker-inner { transform: none !important; }
+}
