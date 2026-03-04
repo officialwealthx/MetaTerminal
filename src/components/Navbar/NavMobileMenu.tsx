@@ -53,7 +53,7 @@ export default function NavMobileMenu({ isOpen, onClose }: NavMobileMenuProps) {
       className="fixed inset-x-0 bottom-0 overflow-y-auto md:hidden transition-all duration-300"
       style={{
         top: 58,
-        background: "rgba(12,11,16,0.99)",
+        background: "rgba(18,17,22,0.99)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderTop: "1px solid rgba(255,255,255,0.06)",
