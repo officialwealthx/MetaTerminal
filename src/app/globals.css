@@ -1730,9 +1730,14 @@ body {
 
 /* ─── Gradient Transition overlay ─────────────────────────── */
 .prob-transition {
-  height: 160px;
-  background: linear-gradient(to bottom, transparent 0%, #121116 100%);
-  margin-top: -160px;
+  height: 120px;
+  background: linear-gradient(
+    to bottom,
+    rgba(120, 90, 255, 0.10) 0%,
+    rgba(255, 80, 80, 0.06) 55%,
+    transparent 100%
+  );
+  margin-top: -120px;
   position: relative;
   z-index: 10;
   pointer-events: none;
