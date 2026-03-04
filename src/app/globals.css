@@ -1730,11 +1730,11 @@ body {
 
 /* ─── Gradient Transition overlay ─────────────────────────── */
 .prob-transition {
-  height: 120px;
+  height: 160px;
   background: linear-gradient(to bottom, transparent 0%, #121116 100%);
-  margin-top: -120px;
+  margin-top: -160px;
   position: relative;
-  z-index: 2;
+  z-index: 10;
   pointer-events: none;
 }
 
@@ -1920,8 +1920,8 @@ body {
   pointer-events: none;
 }
 .prob-counter-value {
-  font-size: clamp(40px, 5vw, 56px);
-  font-weight: 900;
+  font-size: clamp(38px, 4.5vw, 52px);
+  font-weight: 700;
   letter-spacing: -.03em;
   line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -2031,6 +2031,8 @@ body {
 }
 .prob-chart-dot {
   animation: probPulse 1.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 .prob-annotations {
   position: absolute;
@@ -2210,7 +2212,7 @@ body {
   .prob-annotation { display: none; }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
   .prob-section { padding: 60px 16px 80px; }
   .prob-counters {
     grid-template-columns: 1fr;
