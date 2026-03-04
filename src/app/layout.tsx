@@ -17,6 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="theme-color" content="#121116" />
+      </head>
       <body className={`${inter.className} bg-background text-white antialiased`}>
         <Navbar />
         {/* pt-[58px] offsets the fixed navbar so content isn't hidden beneath it */}
