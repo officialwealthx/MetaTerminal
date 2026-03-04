@@ -99,13 +99,14 @@ export default function HeroSection() {
           <HeroHeading />
           <HeroSubtitle />
           <HeroCTA />
-          <HeroPlatforms />
         </div>
 
         <div className="hero-dashboard-wrap">
           <HeroFloatingPills />
           <HeroDashboard />
         </div>
+
+        <HeroPlatforms />
       </section>
     </>
   );
