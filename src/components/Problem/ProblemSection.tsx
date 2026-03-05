@@ -358,14 +358,14 @@ export default function ProblemSection() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(PROBLEM_JSON_LD) }}
       />
 
-      {/* ── Gradient Transition from Trust → Problem ── */}
-      <div className="prob-transition" aria-hidden="true" />
-
       <section
         id="problem"
         className="prob-section"
         aria-label="The Real Problem — Why Traders Lose Money"
       >
+        {/* Top fade for smooth transition from Trust Section */}
+        <div className="prob-top-fade" aria-hidden="true" />
+
         {/* Ambient background glows */}
         <div className="prob-glows" aria-hidden="true">
           <div className="prob-glow prob-glow-red-1" />

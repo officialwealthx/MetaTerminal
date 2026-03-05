@@ -1029,6 +1029,17 @@ body {
   pointer-events: none;
 }
 
+.trust-bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 160px;
+  background: linear-gradient(to bottom, transparent 0%, #121116 100%);
+  z-index: 4;
+  pointer-events: none;
+}
+
 /* ============================================================
    TRUST GRID BACKGROUND — Command Center dot grid
    ============================================================ */
@@ -1041,9 +1052,15 @@ body {
   background-image:
     radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
   background-size: 38px 38px;
-  /* Cross-browser mask: -webkit- prefix required for Safari/Chrome */
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  /* Cross-browser mask: fade radially and fade out at the bottom edge */
+  mask-image:
+    linear-gradient(to bottom, black 0%, black 60%, transparent 100%),
+    radial-gradient(ellipse 80% 80% at 50% 30%, black 40%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to bottom, black 0%, black 60%, transparent 100%),
+    radial-gradient(ellipse 80% 80% at 50% 30%, black 40%, transparent 100%);
+  -webkit-mask-composite: source-in;
 }
 
 /* ============================================================
@@ -1728,18 +1745,15 @@ body {
   from { width: 0; }
 }
 
-/* ─── Gradient Transition overlay ─────────────────────────── */
-.prob-transition {
-  height: 120px;
-  background: linear-gradient(
-    to bottom,
-    rgba(120, 90, 255, 0.10) 0%,
-    rgba(255, 80, 80, 0.06) 55%,
-    transparent 100%
-  );
-  margin-top: -120px;
-  position: relative;
-  z-index: 10;
+/* ─── Top fade for smooth transition from Trust Section ───── */
+.prob-top-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, #121116 0%, transparent 100%);
+  z-index: 2;
   pointer-events: none;
 }
 
