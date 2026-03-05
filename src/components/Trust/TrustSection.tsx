@@ -473,6 +473,7 @@ export default function TrustSection() {
             </svg>
           </a>
         </div>
+        <div className="trust-bottom-fade" aria-hidden="true" />
       </section>
     </>
   );
