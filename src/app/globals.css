@@ -2599,6 +2599,7 @@ body {
 .sol-level-card-active {
   border-color: var(--level-color, rgba(255,255,255,.3));
   background: rgba(255,255,255,.06);
+  box-shadow: 0 0 20px 0 rgba(167,139,250,.2);
   box-shadow: 0 0 20px 0 color-mix(in srgb, var(--level-color, #a78bfa) 20%, transparent);
   transform: translateY(-3px);
 }
@@ -2651,6 +2652,7 @@ body {
 .sol-feature-card:hover {
   border-color: var(--card-color, rgba(167,139,250,.4));
   background: rgba(255,255,255,.05);
+  box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 24px rgba(167,139,250,.15);
   box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 24px color-mix(in srgb, var(--card-color, #a78bfa) 15%, transparent);
 }
 
