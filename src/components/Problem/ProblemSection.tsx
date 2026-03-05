@@ -612,6 +612,9 @@ export default function ProblemSection() {
             </svg>
           </a>
         </div>
+
+        {/* Bottom fade for smooth transition to Solution section */}
+        <div className="prob-bottom-fade" aria-hidden="true" />
       </section>
     </>
   );
