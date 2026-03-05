@@ -2273,3 +2273,649 @@ body {
   .prob-glow-red-2 { animation: none; }
   .prob-counter-bar-fill { animation: none; }
 }
+
+/* ─── prob-bottom-fade — smooth transition into Solution section ─────────── */
+.prob-bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent 0%, #121116 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ============================================================
+   SOLUTION SECTION — Safety Score™ & Active Protection
+   ============================================================ */
+
+@keyframes solFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes solPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: .4; transform: scale(.7); }
+}
+
+@keyframes solGlow {
+  0%,100% { opacity: .35; transform: scale(1); }
+  50%     { opacity: .6;  transform: scale(1.12); }
+}
+
+@keyframes solSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes solBadgePop {
+  0%   { opacity: 0; transform: scale(.85) translateY(10px); }
+  70%  { transform: scale(1.04) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes solCardEntrance {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes solGradShift {
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
+}
+
+/* ─── Section shell ────────────────────────────────────────── */
+.sol-section {
+  position: relative;
+  background: #121116;
+  padding: 80px 20px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* ─── Top fade for smooth transition from Problem Section ──── */
+.sol-top-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, #121116 0%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ─── Ambient glows ───────────────────────────────────────── */
+.sol-glows {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.sol-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: opacity, transform;
+}
+.sol-glow-purple-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(120,90,255,.2) 0%, transparent 70%);
+  top: -80px; left: 8%;
+  animation: solGlow 9s ease-in-out infinite;
+}
+.sol-glow-green-1 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(94,240,168,.12) 0%, transparent 70%);
+  top: 240px; right: 6%;
+  animation: solGlow 11s ease-in-out infinite 2s;
+}
+.sol-glow-purple-2 {
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, rgba(167,139,250,.14) 0%, transparent 70%);
+  bottom: 100px; left: 28%;
+  animation: solGlow 13s ease-in-out infinite 4s;
+}
+
+/* ─── Badge ───────────────────────────────────────────────── */
+.sol-badge {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(120,90,255,.1);
+  border: 1px solid rgba(120,90,255,.35);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #a78bfa;
+  margin-bottom: 28px;
+  animation: solBadgePop .7s cubic-bezier(.34,1.56,.64,1) both;
+}
+.sol-badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #a78bfa;
+  animation: solPulse 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ─── H2 ──────────────────────────────────────────────────── */
+.sol-h2 {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(34px, 6vw, 66px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  animation: solFadeUp .75s ease both .12s;
+}
+.sol-h2-white {
+  color: #ffffff;
+}
+.sol-h2-gradient {
+  background: linear-gradient(90deg, #785aff, #a78bfa, #5ef0a8, #a78bfa, #785aff);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: solGradShift 6s ease-in-out infinite;
+}
+
+/* ─── Subtitle ────────────────────────────────────────────── */
+.sol-sub {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(14px, 1.6vw, 18px);
+  color: rgba(255,255,255,.55);
+  max-width: 640px;
+  line-height: 1.65;
+  margin-bottom: 64px;
+  animation: solFadeUp .75s ease both .24s;
+}
+
+/* ─── Score Ring Section ──────────────────────────────────── */
+.sol-ring-section {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  margin-bottom: 72px;
+  width: 100%;
+}
+
+.sol-ring-wrap {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sol-ring-glow {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  pointer-events: none;
+  transition: box-shadow 0.6s ease;
+  box-shadow: 0 0 80px 20px rgba(94,240,168,.2), 0 0 140px 40px rgba(94,240,168,.1);
+}
+
+.sol-ring-svg {
+  width: 300px;
+  height: 300px;
+  display: block;
+}
+
+.sol-ring-track {
+  fill: none;
+  stroke: rgba(255,255,255,.07);
+  stroke-width: 12;
+}
+
+.sol-ring-fill {
+  fill: none;
+  stroke: #5ef0a8;
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.15s linear, stroke 0.4s ease;
+  will-change: stroke-dashoffset, stroke;
+}
+
+.sol-score-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.sol-score-number {
+  font-size: 64px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  transition: color 0.4s ease;
+  font-variant-numeric: tabular-nums;
+}
+
+.sol-score-status {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  padding: 4px 12px;
+  border-radius: 100px;
+  border: 1px solid rgba(94,240,168,.35);
+  background: rgba(94,240,168,.1);
+  transition: color 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+}
+
+/* ─── Score Chips ─────────────────────────────────────────── */
+.sol-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 720px;
+}
+
+.sol-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 10px 14px;
+  min-width: 100px;
+}
+
+.sol-chip-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,.55);
+  letter-spacing: .06em;
+  text-align: left;
+}
+
+.sol-chip-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.sol-chip-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.35s ease, background 0.4s ease;
+  will-change: width;
+}
+
+/* ─── Safety Levels Grid ──────────────────────────────────── */
+.sol-levels {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 72px;
+}
+
+.sol-level-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+  transition: border-color .35s ease, background .35s ease, box-shadow .35s ease, transform .35s ease;
+}
+
+.sol-level-card-active {
+  border-color: var(--level-color, rgba(255,255,255,.3));
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 0 20px 0 rgba(167,139,250,.2);
+  box-shadow: 0 0 20px 0 color-mix(in srgb, var(--level-color, #a78bfa) 20%, transparent);
+  transform: translateY(-3px);
+}
+
+.sol-level-range {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.sol-level-label {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.sol-level-desc {
+  font-size: 12px;
+  color: rgba(255,255,255,.45);
+  line-height: 1.5;
+}
+
+/* ─── Feature Cards Section ───────────────────────────────── */
+.sol-features {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: 100%;
+  max-width: 960px;
+  margin-bottom: 72px;
+}
+
+.sol-feature-card {
+  position: relative;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 24px 20px 20px;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: border-color .3s ease, background .3s ease, box-shadow .3s ease;
+  overflow: hidden;
+  cursor: default;
+  will-change: transform;
+}
+
+.sol-feature-card:hover {
+  border-color: var(--card-color, rgba(167,139,250,.4));
+  background: rgba(255,255,255,.05);
+  box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 24px rgba(167,139,250,.15);
+  box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 24px color-mix(in srgb, var(--card-color, #a78bfa) 15%, transparent);
+}
+
+.sol-card-visible {
+  animation: solCardEntrance .55s cubic-bezier(.23,1,.32,1) both;
+}
+
+.sol-feature-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 16px 16px 0 0;
+  opacity: .7;
+}
+
+.sol-feature-icon {
+  margin-bottom: 12px;
+}
+
+.sol-feature-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -.01em;
+}
+
+.sol-feature-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,.5);
+  line-height: 1.6;
+}
+
+/* ─── Comparison Section ──────────────────────────────────── */
+.sol-comparison {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 780px;
+  margin-bottom: 80px;
+}
+
+.sol-compare-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 24px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.sol-compare-card-bad {
+  border-color: rgba(255,107,107,.2);
+  background: rgba(255,107,107,.03);
+}
+
+.sol-compare-card-good {
+  border-color: rgba(94,240,168,.2);
+  background: rgba(94,240,168,.03);
+}
+
+.sol-compare-header {
+  display: flex;
+  align-items: center;
+}
+
+.sol-compare-pill {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+
+.sol-compare-pill-red {
+  background: rgba(255,107,107,.12);
+  border: 1px solid rgba(255,107,107,.3);
+  color: #ff6b6b;
+}
+
+.sol-compare-pill-green {
+  background: rgba(94,240,168,.12);
+  border: 1px solid rgba(94,240,168,.3);
+  color: #5ef0a8;
+}
+
+.sol-compare-svg {
+  width: 100%;
+  height: 80px;
+  display: block;
+  border-radius: 8px;
+  background: rgba(0,0,0,.2);
+}
+
+.sol-compare-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sol-compare-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sol-compare-stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.sol-compare-stat-bad { color: #ff6b6b; }
+.sol-compare-stat-good { color: #5ef0a8; }
+.sol-compare-stat-na { color: rgba(255,255,255,.3); }
+
+.sol-compare-stat-label {
+  font-size: 11px;
+  color: rgba(255,255,255,.4);
+  letter-spacing: .04em;
+}
+
+/* ─── Bottom CTA ──────────────────────────────────────────── */
+.sol-cta {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.sol-cta-headline {
+  font-size: clamp(22px, 3.5vw, 36px);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.sol-cta-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,.45);
+  margin: 0;
+}
+
+.sol-cta-buttons {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.sol-cta-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 32px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #785aff, #a78bfa);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-decoration: none;
+  transition: opacity .2s, transform .2s, box-shadow .2s;
+  box-shadow: 0 4px 20px rgba(120,90,255,.35);
+}
+
+.sol-cta-btn-primary:hover {
+  opacity: .92;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(120,90,255,.5);
+}
+
+.sol-cta-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: 100px;
+  border: 1.5px solid rgba(167,139,250,.45);
+  color: rgba(167,139,250,.9);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-decoration: none;
+  transition: background .25s, border-color .25s, color .25s, box-shadow .25s, transform .2s;
+  background: transparent;
+}
+
+.sol-cta-btn-ghost:hover {
+  background: rgba(167,139,250,.1);
+  border-color: rgba(167,139,250,.8);
+  color: #a78bfa;
+  box-shadow: 0 0 24px rgba(167,139,250,.2);
+  transform: translateY(-2px);
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .sol-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sol-levels {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .sol-section { padding: 60px 16px 80px; }
+  .sol-features {
+    grid-template-columns: 1fr;
+  }
+  .sol-levels {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sol-comparison {
+    grid-template-columns: 1fr;
+  }
+  .sol-ring-wrap,
+  .sol-ring-svg {
+    width: 260px;
+    height: 260px;
+  }
+  .sol-score-number { font-size: 52px; }
+  .sol-chips { gap: 8px; }
+  .sol-chip { min-width: 88px; }
+}
+
+@media (max-width: 380px) {
+  .sol-levels {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Reduced Motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .sol-badge,
+  .sol-h2,
+  .sol-sub { animation: none; opacity: 1; }
+  .sol-badge-dot { animation: none; }
+  .sol-h2-gradient { animation: none; }
+  .sol-glow-purple-1,
+  .sol-glow-green-1,
+  .sol-glow-purple-2 { animation: none; }
+  .sol-ring-fill { transition: none; }
+  .sol-chip-fill { transition: none; }
+  .sol-feature-card {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .sol-card-visible { animation: none; }
+}
