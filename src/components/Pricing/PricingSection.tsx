@@ -689,7 +689,7 @@ export default function PricingSection() {
             </span>
             <span className="price-trust-item">
               <svg
-                viewBox="0 0 16 16"
+                viewBox="0 0 24 24"
                 fill="none"
                 stroke="#f5c542"
                 strokeWidth="2"
@@ -699,7 +699,7 @@ export default function PricingSection() {
                 height="14"
                 aria-hidden="true"
               >
-                <path d="M12 15s6-3 6-7.5V4l-6-2.25L6 4v3.5C6 12 12 15 12 15z" />
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
               Trusted by 3,000+ traders worldwide
             </span>
