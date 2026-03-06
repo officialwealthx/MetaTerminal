@@ -612,6 +612,9 @@ export default function SolutionSection() {
             </a>
           </div>
         </div>
+
+        {/* Bottom fade for smooth transition to Features section */}
+        <div className="sol-bottom-fade" aria-hidden="true" />
       </section>
     </>
   );

@@ -2,6 +2,7 @@ import { HeroSection } from "@/components/Hero";
 import { TrustSection } from "@/components/Trust";
 import { ProblemSection } from "@/components/Problem";
 import { SolutionSection } from "@/components/Solution";
+import { FeaturesSection } from "@/components/Features";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <TrustSection />
       <ProblemSection />
       <SolutionSection />
+      <FeaturesSection />
     </main>
   );
 }
