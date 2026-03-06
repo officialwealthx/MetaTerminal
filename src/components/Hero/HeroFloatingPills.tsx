@@ -15,7 +15,7 @@ const PILLS: Pill[] = [
   {
     icon: "◆",
     iconColor: "#785aff",
-    title: "2,400+ Traders",
+    title: "3,000+ Traders",
     subtitle: "Active worldwide",
     posClass: "pill-tl",
     animClass: "pill-anim-left",

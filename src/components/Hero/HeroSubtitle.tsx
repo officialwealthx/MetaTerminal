@@ -6,7 +6,7 @@ export default function HeroSubtitle() {
       MetaTerminal detects your{" "}
       <strong>emotional patterns</strong> in real-time and{" "}
       <strong>automatically blocks dangerous trades</strong> before you lose
-      money — so your strategy, not your feelings, drives every decision.
+      money, so your strategy, not your feelings, drives every decision.
     </p>
   );
 }

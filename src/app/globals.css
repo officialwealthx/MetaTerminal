@@ -1191,6 +1191,7 @@ body {
 
 .trust-h2-gradient {
   display: block;
+  margin-top: -2px;
   background: linear-gradient(135deg, #c4b5fd 0%, #785aff 30%, #5ef0a8 65%, #8dfdd6 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
