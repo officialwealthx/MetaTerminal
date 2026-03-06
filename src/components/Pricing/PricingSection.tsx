@@ -41,7 +41,7 @@ const PRICING_JSON_LD = {
     },
     {
       "@type": "Offer",
-      name: "Elite Sentinel",
+      name: "Ultimate",
       price: "89",
       priceCurrency: "CHF",
       url: "https://metaterminal.app/pricing",
@@ -156,13 +156,13 @@ const PLANS = [
   },
   {
     id: "elite",
-    name: "Elite Sentinel",
+    name: "Ultimate",
     tagline: "Zero compromise. Sentinel protects — even from yourself.",
     monthlyPrice: 89,
     annualPrice: 72,
     annualSavings: "Save 19%",
     description: "Total lockdown. Maximum protection. No exceptions.",
-    cta: "Get Elite",
+    cta: "Get Ultimate",
     ctaHref: "/register",
     popular: false,
     elite: true,
@@ -178,7 +178,7 @@ const PLANS = [
       { text: "Custom Rules Engine — IF/THEN/AND/OR logic", type: "check" },
       { text: "Prop Firm Mode — FTMO / MyFundedFX / The5%ers", type: "check" },
       { text: "Challenge Tracker + Health Score", type: "check" },
-      { text: "Elite Weekly Report — AI recommendations", type: "check" },
+      { text: "Ultimate Weekly Report — AI recommendations", type: "check" },
       { text: "API Access — REST API", type: "check" },
       { text: "Webhook Notifications — Discord, Telegram, Slack", type: "check" },
       { text: "Multi-Account Dashboard", type: "check" },
@@ -250,6 +250,73 @@ const FAQS = [
   },
 ];
 
+/* ─── Feature Item Renderer ──────────────────────────────────────────────── */
+function renderFeatureItem(feature: FeatureItem, key: number, accentColor: string) {
+  if (feature.type === "divider") {
+    return <li key={key} className="price-feature-divider-text">{feature.text}</li>;
+  }
+  if (feature.type === "no") {
+    return (
+      <li key={key} className="price-feature-item price-feature-item-no">
+        <svg className="price-feat-icon price-icon-no" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14" aria-hidden="true">
+          <line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" />
+        </svg>
+        {feature.text}
+      </li>
+    );
+  }
+  if (feature.type === "lock") {
+    return (
+      <li key={key} className="price-feature-item price-feature-item-lock">
+        <svg className="price-feat-icon price-icon-lock" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14" aria-hidden="true">
+          <rect x="3" y="7" width="10" height="8" rx="1.5" /><path d="M5 7V5a3 3 0 0 1 6 0v2" />
+        </svg>
+        {feature.text}
+      </li>
+    );
+  }
+  if (feature.type === "warn") {
+    return (
+      <li key={key} className="price-feature-item price-feature-item-warn">
+        <svg className="price-feat-icon price-icon-warn" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14" aria-hidden="true">
+          <path d="M8 2L1 14h14L8 2z" /><line x1="8" y1="7" x2="8" y2="10" /><circle cx="8" cy="12.5" r="0.5" fill="currentColor" />
+        </svg>
+        {feature.text}
+      </li>
+    );
+  }
+  if (feature.type === "eye") {
+    return (
+      <li key={key} className="price-feature-item price-feature-item-eye">
+        <svg className="price-feat-icon price-icon-eye" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14" aria-hidden="true">
+          <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z" /><circle cx="8" cy="8" r="2" />
+        </svg>
+        {feature.text}
+      </li>
+    );
+  }
+  if (feature.type === "soon") {
+    return (
+      <li key={key} className="price-feature-item price-feature-item-soon">
+        <svg className="price-feat-icon price-icon-soon" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14" aria-hidden="true">
+          <circle cx="8" cy="8" r="6" /><polyline points="8 5 8 8 10 10" />
+        </svg>
+        {feature.text}
+        <span className="price-soon-badge" aria-label="Coming soon">Soon</span>
+      </li>
+    );
+  }
+  /* default: check */
+  return (
+    <li key={key} className="price-feature-item">
+      <svg className="price-feat-icon price-check-icon" viewBox="0 0 16 16" fill="none" stroke={accentColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14" aria-hidden="true">
+        <polyline points="2 8 6 12 14 4" />
+      </svg>
+      {feature.text}
+    </li>
+  );
+}
+
 /* ─── Price Animation ────────────────────────────────────────────────────── */
 function animatePrice(
   el: HTMLSpanElement,
@@ -271,6 +338,7 @@ function animatePrice(
 export default function PricingSection() {
   const [isAnnual, setIsAnnual] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({});
 
   const sectionRef = useRef<HTMLElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -278,7 +346,6 @@ export default function PricingSection() {
   const currentPricesRef = useRef<number[]>([0, 0, 0, 0]);
   const hasAnimatedRef = useRef(false);
   const prefersReducedRef = useRef(false);
-  const rafRef = useRef<number>(0);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const cardObserverRef = useRef<IntersectionObserver | null>(null);
   const isAnnualRef = useRef(false);
@@ -308,39 +375,6 @@ export default function PricingSection() {
   useEffect(() => {
     isAnnualRef.current = isAnnual;
   }, [isAnnual]);
-
-  /* ── 3D tilt handlers ── */
-  const handleCardMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (prefersReducedRef.current) return;
-      const card = e.currentTarget;
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        const isPopular = card.dataset.popular === "true";
-        const baseY = isPopular ? -8 : 0;
-        card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(${baseY - 4}px) scale(${isPopular ? 1.04 : 1.02})`;
-        card.style.transition = "transform 0.06s linear";
-      });
-    },
-    [],
-  );
-
-  const handleCardMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      cancelAnimationFrame(rafRef.current);
-      const card = e.currentTarget;
-      const isPopular = card.dataset.popular === "true";
-      card.style.transform = isPopular
-        ? "translateY(-8px) scale(1.02)"
-        : "translateY(0) scale(1)";
-      card.style.transition =
-        "transform 0.45s cubic-bezier(0.23,1,0.32,1)";
-    },
-    [],
-  );
 
   /* ── Card entrance animation ── */
   useEffect(() => {
@@ -454,6 +488,11 @@ export default function PricingSection() {
     setOpenFaq((prev) => (prev === i ? null : i));
   }, []);
 
+  /* ── Feature list expand/collapse ── */
+  const toggleExpand = useCallback((planId: string) => {
+    setExpandedCards((prev) => ({ ...prev, [planId]: !prev[planId] }));
+  }, []);
+
   return (
     <>
       <script
@@ -478,9 +517,6 @@ export default function PricingSection() {
           <div className="price-glow price-glow-purple" />
           <div className="price-glow price-glow-gold" />
         </div>
-
-        {/* Scan line */}
-        <div className="price-scan-line" aria-hidden="true" />
 
         {/* ── A. Section Header ── */}
         <div className="price-header">
@@ -544,8 +580,6 @@ export default function PricingSection() {
               data-card-index={i}
               data-popular={plan.popular ? "true" : "false"}
               className={`price-card${plan.popular ? " price-card-popular" : ""}${plan.elite ? " price-card-elite" : ""}`}
-              onMouseMove={handleCardMouseMove}
-              onMouseLeave={handleCardMouseLeave}
               aria-label={`${plan.name} plan`}
             >
               {/* Corner decorations */}
@@ -666,155 +700,70 @@ export default function PricingSection() {
               {/* Feature section divider */}
               <div className="price-feature-divider" aria-hidden="true" />
 
-              {/* Feature list */}
-              <ul
-                className="price-feature-list"
-                aria-label={`${plan.name} plan features`}
-              >
-                {plan.features.map((feature, fi) => {
-                  if (feature.type === "divider") {
-                    return (
-                      <li key={fi} className="price-feature-divider-text">
-                        {feature.text}
-                      </li>
-                    );
-                  }
-                  if (feature.type === "no") {
-                    return (
-                      <li key={fi} className="price-feature-item price-feature-item-no">
-                        <svg
-                          className="price-feat-icon price-icon-no"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          width="14"
-                          height="14"
-                          aria-hidden="true"
-                        >
-                          <line x1="4" y1="4" x2="12" y2="12" />
-                          <line x1="12" y1="4" x2="4" y2="12" />
-                        </svg>
-                        {feature.text}
-                      </li>
-                    );
-                  }
-                  if (feature.type === "lock") {
-                    return (
-                      <li key={fi} className="price-feature-item price-feature-item-lock">
-                        <svg
-                          className="price-feat-icon price-icon-lock"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          width="14"
-                          height="14"
-                          aria-hidden="true"
-                        >
-                          <rect x="3" y="7" width="10" height="8" rx="1.5" />
-                          <path d="M5 7V5a3 3 0 0 1 6 0v2" />
-                        </svg>
-                        {feature.text}
-                      </li>
-                    );
-                  }
-                  if (feature.type === "warn") {
-                    return (
-                      <li key={fi} className="price-feature-item price-feature-item-warn">
-                        <svg
-                          className="price-feat-icon price-icon-warn"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          width="14"
-                          height="14"
-                          aria-hidden="true"
-                        >
-                          <path d="M8 2L1 14h14L8 2z" />
-                          <line x1="8" y1="7" x2="8" y2="10" />
-                          <circle cx="8" cy="12.5" r="0.5" fill="currentColor" />
-                        </svg>
-                        {feature.text}
-                      </li>
-                    );
-                  }
-                  if (feature.type === "eye") {
-                    return (
-                      <li key={fi} className="price-feature-item price-feature-item-eye">
-                        <svg
-                          className="price-feat-icon price-icon-eye"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          width="14"
-                          height="14"
-                          aria-hidden="true"
-                        >
-                          <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z" />
-                          <circle cx="8" cy="8" r="2" />
-                        </svg>
-                        {feature.text}
-                      </li>
-                    );
-                  }
-                  if (feature.type === "soon") {
-                    return (
-                      <li key={fi} className="price-feature-item price-feature-item-soon">
-                        <svg
-                          className="price-feat-icon price-icon-soon"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          width="14"
-                          height="14"
-                          aria-hidden="true"
-                        >
-                          <circle cx="8" cy="8" r="6" />
-                          <polyline points="8 5 8 8 10 10" />
-                        </svg>
-                        {feature.text}
-                        <span className="price-soon-badge" aria-label="Coming soon">
-                          Soon
-                        </span>
-                      </li>
-                    );
-                  }
-                  /* default: check */
-                  return (
-                    <li key={fi} className="price-feature-item">
-                      <svg
-                        className="price-feat-icon price-check-icon"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        stroke={plan.accentColor}
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        width="14"
-                        height="14"
-                        aria-hidden="true"
+              {/* Feature list — collapsible */}
+              {(() => {
+                const defaultVisible = plan.popular ? 8 : 6;
+                const isExpanded = expandedCards[plan.id] ?? false;
+                const visibleFeatures = plan.features.slice(0, defaultVisible);
+                const hiddenFeatures = plan.features.slice(defaultVisible);
+                const hasHidden = hiddenFeatures.length > 0;
+                return (
+                  <>
+                    <ul
+                      className="price-feature-list"
+                      aria-label={`${plan.name} plan features`}
+                    >
+                      {visibleFeatures.map((feature, fi) =>
+                        renderFeatureItem(feature, fi, plan.accentColor)
+                      )}
+                    </ul>
+                    {hasHidden && (
+                      <div
+                        className={`price-features-extra${isExpanded ? " price-features-extra-open" : ""}`}
+                        id={`price-features-extra-${plan.id}`}
+                        aria-hidden={!isExpanded}
                       >
-                        <polyline points="2 8 6 12 14 4" />
-                      </svg>
-                      {feature.text}
-                    </li>
-                  );
-                })}
-              </ul>
+                        <ul className="price-feature-list">
+                          {hiddenFeatures.map((feature, fi) =>
+                            renderFeatureItem(feature, defaultVisible + fi, plan.accentColor)
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                    {hasHidden && (
+                      <div className="price-features-toggle-wrap">
+                        {!isExpanded && (
+                          <div className="price-features-fade" aria-hidden="true" />
+                        )}
+                        <button
+                          className="price-features-toggle"
+                          onClick={() => toggleExpand(plan.id)}
+                          aria-expanded={isExpanded}
+                          aria-controls={`price-features-extra-${plan.id}`}
+                        >
+                          <svg
+                            className={`price-features-chevron${isExpanded ? " price-features-chevron-up" : ""}`}
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            width="12"
+                            height="12"
+                            aria-hidden="true"
+                          >
+                            <polyline points="4 6 8 10 12 6" />
+                          </svg>
+                          {isExpanded
+                            ? "Show less"
+                            : `Show all ${plan.features.length} features`}
+                        </button>
+                      </div>
+                    )}
+                  </>
+                );
+              })()}
             </div>
           ))}
         </div>

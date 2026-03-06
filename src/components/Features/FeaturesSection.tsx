@@ -180,8 +180,6 @@ export default function FeaturesSection() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const stepObserverRef = useRef<IntersectionObserver | null>(null);
   const cardObserverRef = useRef<IntersectionObserver | null>(null);
-  const rafRef = useRef<number>(0);
-
   const setStepRef = useCallback(
     (i: number) => (el: HTMLDivElement | null) => {
       stepsRef.current[i] = el;
@@ -199,32 +197,6 @@ export default function FeaturesSection() {
   const setCardRef = useCallback(
     (i: number) => (el: HTMLDivElement | null) => {
       cardsRef.current[i] = el;
-    },
-    [],
-  );
-
-  /* ── 3D tilt handlers ── */
-  const handleCardMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      const card = e.currentTarget;
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px) scale(1.02)`;
-        card.style.transition = "transform 0.06s linear";
-      });
-    },
-    [],
-  );
-
-  const handleCardMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      cancelAnimationFrame(rafRef.current);
-      const card = e.currentTarget;
-      card.style.transform = "";
-      card.style.transition = "transform 0.45s cubic-bezier(0.23,1,0.32,1)";
     },
     [],
   );
@@ -334,9 +306,6 @@ export default function FeaturesSection() {
         {/* Dot-grid background */}
         <div className="feat-grid-bg" aria-hidden="true" />
 
-        {/* Scan line */}
-        <div className="feat-scan-line" aria-hidden="true" />
-
         {/* Ambient glows */}
         <div className="feat-glows" aria-hidden="true">
           <div className="feat-glow feat-glow-purple" />
@@ -439,8 +408,6 @@ export default function FeaturesSection() {
                   "--card-delay": `${i * 0.12}s`,
                 } as React.CSSProperties
               }
-              onMouseMove={handleCardMouseMove}
-              onMouseLeave={handleCardMouseLeave}
             >
               {/* Corner brackets */}
               <div className="feat-card-corner feat-card-corner-tl" aria-hidden="true" />

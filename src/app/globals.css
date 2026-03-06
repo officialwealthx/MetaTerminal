@@ -39,11 +39,6 @@ body {
   50%     { opacity: .15; }
 }
 
-@keyframes hScan {
-  0%   { top: -40px; }
-  100% { top: 100%; }
-}
-
 @keyframes hSh {
   0%,100% { box-shadow: 0 0 0 0 rgba(94,240,168,0); }
   50%     { box-shadow: 0 0 0 6px rgba(94,240,168,.02), 0 0 18px rgba(94,240,168,.025); }
@@ -518,17 +513,6 @@ body {
   animation: hBlink 1.5s infinite;
 }
 
-/* Scanning line */
-.hero-scan {
-  position: absolute;
-  left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(to right, transparent, rgba(120,90,255,0.5), rgba(94,240,168,0.3), transparent);
-  animation: hScan 5s linear infinite;
-  z-index: 10;
-  pointer-events: none;
-}
-
 /* Dashboard grid */
 .dash-grid {
   display: grid;
@@ -905,7 +889,6 @@ body {
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-scan { display: none; }
   .hero-fi   { animation: none; opacity: 1; transform: none; }
   .hero-badge,
   .hero-h1,
@@ -950,14 +933,6 @@ body {
 @keyframes trustBorderSpin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
-}
-
-/* Horizontal scan line sweeping through the section */
-@keyframes trustScanLine {
-  0%   { top: -4px; opacity: 0; }
-  5%   { opacity: 1; }
-  95%  { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
 }
 
 /* Ambient glow pulse — slow breathe */
@@ -1061,31 +1036,6 @@ body {
     linear-gradient(to bottom, black 0%, black 60%, transparent 100%),
     radial-gradient(ellipse 80% 80% at 50% 30%, black 40%, transparent 100%);
   -webkit-mask-composite: source-in;
-}
-
-/* ============================================================
-   TRUST SCAN LINE — Animated horizontal sweep
-   ============================================================ */
-
-.trust-scan-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(94,240,168,0.12) 20%,
-    rgba(120,90,255,0.35) 50%,
-    rgba(94,240,168,0.12) 80%,
-    transparent 100%
-  );
-  z-index: 2;
-  pointer-events: none;
-  animation: trustScanLine 8s linear infinite;
-  animation-delay: 1.5s;
-  top: -4px;
-  opacity: 0;
 }
 
 /* ============================================================
@@ -1688,7 +1638,6 @@ body {
   .trust-badge-dot,
   .trust-card-live-dot,
   .trust-ticker-live-dot { animation: none; }
-  .trust-scan-line { display: none; }
   .trust-glow-purple,
   .trust-glow-green,
   .trust-glow-gold { animation: none; }
@@ -2952,11 +2901,6 @@ body {
   50%     { opacity: .55; transform: scale(1.15); }
 }
 
-@keyframes featScan {
-  0%   { top: -40px; }
-  100% { top: 100%; }
-}
-
 @keyframes featBadgePop {
   0%   { opacity: 0; transform: scale(.85) translateY(10px); }
   70%  { transform: scale(1.04) translateY(-2px); }
@@ -3024,18 +2968,6 @@ body {
   background-image: radial-gradient(circle, rgba(255,255,255,0.045) 1px, transparent 1px);
   background-size: 28px 28px;
   opacity: 0.6;
-}
-
-/* ─── Scan line ───────────────────────────────────────────── */
-.feat-scan-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(94,240,168,0.12) 30%, rgba(167,139,250,0.18) 70%, transparent 100%);
-  z-index: 1;
-  pointer-events: none;
-  animation: featScan 9s linear infinite;
 }
 
 /* ─── Ambient glows ───────────────────────────────────────── */
@@ -3603,7 +3535,6 @@ body {
   .feat-glow-purple,
   .feat-glow-green,
   .feat-glow-purple-2 { animation: none; }
-  .feat-scan-line { animation: none; }
   .feat-step-glow-ring { animation: none; }
   .feat-card-live-dot { animation: none; }
   .feat-step {
@@ -3663,13 +3594,6 @@ body {
 @keyframes priceLiveDot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.35; transform: scale(1.45); }
-}
-
-@keyframes priceScan {
-  0%   { top: -2px; opacity: 0; }
-  5%   { opacity: 1; }
-  95%  { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
 }
 
 /* ── Section Layout ───────────────────────────────────────── */
@@ -3748,17 +3672,6 @@ body {
   z-index: 2;
 }
 
-/* ── Scan line ────────────────────────────────────────────── */
-.price-scan-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(94,240,168,0.12) 30%, rgba(167,139,250,0.18) 70%, transparent 100%);
-  z-index: 1;
-  pointer-events: none;
-  animation: priceScan 10s linear infinite;
-}
 .price-header {
   position: relative;
   z-index: 3;
@@ -4245,6 +4158,58 @@ body {
   list-style: none;
 }
 
+/* ── Collapsible feature list ─────────────────────────────── */
+.price-features-extra {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.price-features-extra-open {
+  max-height: 2000px;
+}
+
+.price-features-toggle-wrap {
+  position: relative;
+  margin-top: 4px;
+}
+
+.price-features-fade {
+  height: 36px;
+  background: linear-gradient(to bottom, transparent, rgba(18,17,22,0.95));
+  margin-top: -36px;
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.price-features-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 0 2px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.38);
+  transition: color 0.2s;
+  font-family: inherit;
+}
+
+.price-features-toggle:hover {
+  color: rgba(255,255,255,0.65);
+}
+
+.price-features-chevron {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.price-features-chevron-up {
+  transform: rotate(180deg);
+}
+
 /* ── Trust Reinforcement ──────────────────────────────────── */
 .price-trust {
   position: relative;
@@ -4570,7 +4535,8 @@ body {
   .price-toggle-btn { transition: none; }
   .price-faq-content { transition: none; }
   .price-faq-icon { transition: none; }
-  .price-scan-line { animation: none; }
+  .price-features-extra { transition: none; }
+  .price-features-chevron { transition: none; }
   .price-card {
     opacity: 1;
     transition: none;
