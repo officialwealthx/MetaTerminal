@@ -378,13 +378,6 @@ export default function TrustSection() {
               <div className="trust-card-corner trust-card-corner-tl" aria-hidden="true" />
               <div className="trust-card-corner trust-card-corner-br" aria-hidden="true" />
 
-              {/* Terminal-style header dots */}
-              <div className="trust-card-header" aria-hidden="true">
-                <span className="trust-card-hdot" style={{ background: card.color }} />
-                <span className="trust-card-hdot trust-card-hdot-dim" />
-                <span className="trust-card-hdot trust-card-hdot-dim" />
-              </div>
-
               <div className="trust-stat-icon" aria-hidden="true" style={{ color: card.color }}>
                 {card.icon}
               </div>

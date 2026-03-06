@@ -70,7 +70,7 @@ const PROBLEM_CARDS = [
     id: "fomo",
     title: "FOMO Entries",
     color: "#ffb450",
-    description: "Jumping into trades after seeing a big move, fearing to miss out — entering at the worst possible moment.",
+    description: "Jumping into trades after seeing a big move, fearing to miss out, entering at the worst possible moment.",
     quote: "Saw one green candle, jumped in at the top, immediately stopped out.",
     miniPath: "M0,20 C5,20 8,20 12,18 C18,15 20,14 25,12 C30,10 35,8 42,10 C50,12 55,16 60,20",
     icon: (
@@ -98,7 +98,7 @@ const PROBLEM_CARDS = [
     id: "losschasing",
     title: "Loss Chasing",
     color: "#ffb450",
-    description: "Doubling down on losing positions hoping they will reverse — turning small losses into account-ending ones.",
+    description: "Doubling down on losing positions hoping they will reverse, turning small losses into account-ending ones.",
     quote: "Kept adding to a losing GBPUSD position. What started as -50 pips became -380.",
     miniPath: "M0,5 C10,6 15,8 25,12 C35,16 40,20 50,24 C60,28 70,32 80,34",
     icon: (
@@ -125,7 +125,7 @@ const PROBLEM_CARDS = [
     id: "tilt",
     title: "Tilt Spiral",
     color: "#ffb450",
-    description: "Complete loss of emotional control — rage-trading, ignoring stops, destroying weeks of disciplined work.",
+    description: "Complete loss of emotional control. Rage trading, ignoring stops, destroying weeks of disciplined work.",
     quote: "Rage-closed a winning trade, then opened 6 revenge trades back-to-back. Gone in 20 minutes.",
     miniPath: "M0,8 C5,8 8,9 12,11 C18,14 20,18 25,22 C30,26 35,30 40,34 C45,38 50,40 55,42",
     icon: (
@@ -396,7 +396,7 @@ export default function ProblemSection() {
 
         {/* Subtitle */}
         <p className="prob-sub">
-          <strong>92% of traders</strong> lose money not because of bad strategy —
+          <strong>92% of traders</strong> lose money not because of bad strategy,
           but because of <strong>emotional decisions</strong> they can&apos;t control.
         </p>
 

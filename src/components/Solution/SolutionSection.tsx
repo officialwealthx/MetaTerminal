@@ -13,12 +13,12 @@ const SOLUTION_JSON_LD = {
     "MetaTerminal's Safety Score™ monitors trading behavior in real-time, providing instant protection against emotional trading with automated cooldowns, danger alerts, and account protection.",
   featureList: [
     "Safety Score™ (0-100) real-time calculation",
-    "Cooldown Mode — automatic trade blocking",
-    "Danger Alerts — real-time emotional trading warnings",
-    "News Alerts — NFP, FOMC, CPI event notifications",
-    "Account Protection — max drawdown monitoring",
-    "RRR Enforcer — Risk-Reward Ratio tracking",
-    "Session Replay — emotional episode review",
+    "Cooldown Mode: automatic trade blocking",
+    "Danger Alerts: real-time emotional trading warnings",
+    "News Alerts: NFP, FOMC, CPI event notifications",
+    "Account Protection: max drawdown monitoring",
+    "RRR Enforcer: Risk-Reward Ratio tracking",
+    "Session Replay: emotional episode review",
   ],
   operatingSystem: "MetaTrader 4, MetaTrader 5, cTrader, TradingView",
   offers: {
