@@ -2,17 +2,18 @@
 
 import React, { useEffect, useRef } from "react";
 
-// 18 data points for a realistic trading-activity chart
-// viewBox: 0 0 108 80  (x: 0–108, y: 0–80, lower y = visually higher)
+// 22 data points for a realistic trading-activity chart
+// viewBox: 0 0 200 80  (x: 0–200, y: 0–80, lower y = visually higher)
 const POINTS: [number, number][] = [
-  [0, 62], [6, 56], [12, 49], [18, 54], [24, 46],
-  [30, 38], [36, 43], [42, 36], [48, 41], [54, 33],
-  [60, 27], [66, 31], [72, 24], [78, 29], [84, 20],
-  [90, 24], [96, 17], [102, 21], [108, 14],
+  [0, 58], [10, 54], [22, 50], [30, 53], [40, 48],
+  [52, 42], [60, 45], [70, 38], [78, 41], [88, 34],
+  [95, 37], [105, 30], [115, 33], [122, 28], [132, 32],
+  [140, 26], [150, 30], [158, 24], [168, 28], [178, 20],
+  [188, 23], [200, 16],
 ];
 
 /** Catmull-Rom → cubic Bézier conversion for a smooth organic line */
-function buildSmoothPath(pts: [number, number][], tension = 0.4): string {
+function buildSmoothPath(pts: [number, number][], tension = 0.25): string {
   if (pts.length < 2) return "";
   let d = `M ${pts[0][0]},${pts[0][1]}`;
   for (let i = 1; i < pts.length; i++) {
@@ -78,7 +79,7 @@ export default function BehavioralChartTile() {
       </div>
 
       <div className="chart-wrap" aria-hidden="true" ref={wrapRef}>
-        <svg viewBox="0 0 108 80" preserveAspectRatio="none" className="chart-svg">
+        <svg viewBox="0 0 200 80" preserveAspectRatio="xMidYMid meet" className="chart-svg">
           <defs>
             <linearGradient id="chartGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#785aff" stopOpacity="0.5" />
@@ -89,15 +90,32 @@ export default function BehavioralChartTile() {
               <stop offset="0%" stopColor="#5ef0a8" stopOpacity="0.22" />
               <stop offset="100%" stopColor="#5ef0a8" stopOpacity="0" />
             </linearGradient>
+            <filter id="chartGlow" x="-10%" y="-40%" width="120%" height="180%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
           </defs>
 
           {/* Subtle background grid lines */}
-          <line x1="0" y1="20" x2="108" y2="20" className="chart-grid-line" />
-          <line x1="0" y1="40" x2="108" y2="40" className="chart-grid-line" />
-          <line x1="0" y1="60" x2="108" y2="60" className="chart-grid-line" />
+          <line x1="0" y1="20" x2="200" y2="20" className="chart-grid-line" />
+          <line x1="0" y1="40" x2="200" y2="40" className="chart-grid-line" />
+          <line x1="0" y1="60" x2="200" y2="60" className="chart-grid-line" />
 
           {/* Area fill — fades in with the line */}
           <path ref={areaRef} d={AREA_PATH} fill="url(#areaGrad)" className="chart-area" />
+
+          {/* Subtle glow layer behind the line */}
+          <path
+            d={LINE_PATH}
+            fill="none"
+            stroke="url(#chartGrad)"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.25"
+            filter="url(#chartGlow)"
+            className="chart-area"
+          />
 
           {/* Main smooth line — draws left→right on scroll into view */}
           <path
@@ -105,7 +123,7 @@ export default function BehavioralChartTile() {
             d={LINE_PATH}
             fill="none"
             stroke="url(#chartGrad)"
-            strokeWidth="1.8"
+            strokeWidth="2.2"
             strokeLinecap="round"
             strokeLinejoin="round"
             pathLength="1000"
