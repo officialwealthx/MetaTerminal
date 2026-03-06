@@ -43,7 +43,7 @@ const JSON_LD = {
     },
     {
       "@type": "Offer",
-      name: "Elite Sentinel",
+      name: "Ultimate",
       price: "89",
       priceCurrency: "CHF",
       description: "Full Sentinel mode with elite protection",

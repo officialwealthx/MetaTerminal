@@ -21,9 +21,6 @@ export default function HeroDashboard() {
         </span>
       </div>
 
-      {/* Scanning line */}
-      <div className="hero-scan" aria-hidden="true" />
-
       {/* Dashboard grid */}
       <div className="dash-grid">
         <SafetyScoreTile />

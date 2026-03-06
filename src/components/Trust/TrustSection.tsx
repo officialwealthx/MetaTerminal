@@ -28,7 +28,7 @@ const TRUST_JSON_LD = {
       { "@type": "Offer", name: "Free", price: "0", priceCurrency: "CHF", url: "https://metaterminal.app/pricing", availability: "https://schema.org/InStock" },
       { "@type": "Offer", name: "Core", price: "29", priceCurrency: "CHF", url: "https://metaterminal.app/pricing", availability: "https://schema.org/InStock" },
       { "@type": "Offer", name: "Pro", price: "49", priceCurrency: "CHF", url: "https://metaterminal.app/pricing", availability: "https://schema.org/InStock" },
-      { "@type": "Offer", name: "Elite Sentinel", price: "89", priceCurrency: "CHF", url: "https://metaterminal.app/pricing", availability: "https://schema.org/InStock" },
+      { "@type": "Offer", name: "Ultimate", price: "89", priceCurrency: "CHF", url: "https://metaterminal.app/pricing", availability: "https://schema.org/InStock" },
     ],
   },
   aggregateRating: {
@@ -211,28 +211,6 @@ export default function TrustSection() {
     [],
   );
 
-  /* ── 3D tilt handlers ── */
-  const handleCardMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      const card = e.currentTarget;
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `perspective(700px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateY(-8px) scale(1.02)`;
-      card.style.transition = "transform 0.06s linear";
-    },
-    [],
-  );
-
-  const handleCardMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      const card = e.currentTarget;
-      card.style.transform = "";
-      card.style.transition = "transform 0.45s cubic-bezier(0.23,1,0.32,1), box-shadow 0.45s ease";
-    },
-    [],
-  );
-
   /* ── Ticker RAF animation ── */
   useEffect(() => {
     const el = tickerRef.current;
@@ -315,9 +293,6 @@ export default function TrustSection() {
         {/* Command-Center dot-grid background */}
         <div className="trust-grid-bg" aria-hidden="true" />
 
-        {/* Animated horizontal scan line */}
-        <div className="trust-scan-line" aria-hidden="true" />
-
         {/* Ambient background glows */}
         <div className="trust-glows" aria-hidden="true">
           <div className="trust-glow trust-glow-purple" />
@@ -367,10 +342,7 @@ export default function TrustSection() {
                   "--card-delay": `${i * 0.14}s`,
                 } as React.CSSProperties
               }
-              onMouseMove={handleCardMouseMove}
-              onMouseLeave={handleCardMouseLeave}
             >
-              {/* Animated gradient border overlay */}
               <div className="trust-card-border" aria-hidden="true" />
 
               {/* Corner bracket decorations */}

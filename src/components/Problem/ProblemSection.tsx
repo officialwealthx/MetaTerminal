@@ -335,22 +335,6 @@ export default function ProblemSection() {
     };
   }, [chartLoop, updateChart]);
 
-  /* ── Card tilt handlers ── */
-  const handleCardMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px)`;
-    card.style.transition = "transform 0.06s linear";
-  }, []);
-
-  const handleCardLeave = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    card.style.transform = "";
-    card.style.transition = "transform 0.5s cubic-bezier(0.23,1,0.32,1)";
-  }, []);
-
   return (
     <>
       <script
@@ -555,8 +539,6 @@ export default function ProblemSection() {
               className="prob-card"
               role="listitem"
               style={{ "--card-accent": card.color } as React.CSSProperties}
-              onMouseMove={handleCardMove}
-              onMouseLeave={handleCardLeave}
             >
               <div className="prob-card-top-bar" style={{ background: card.color }} aria-hidden="true" />
               <div className="prob-card-icon" style={{ color: card.color }} aria-hidden="true">
