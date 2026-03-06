@@ -3665,6 +3665,13 @@ body {
   50%       { opacity: 0.35; transform: scale(1.45); }
 }
 
+@keyframes priceScan {
+  0%   { top: -2px; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
 /* ── Section Layout ───────────────────────────────────────── */
 .price-section {
   position: relative;
@@ -3741,7 +3748,17 @@ body {
   z-index: 2;
 }
 
-/* ── Section Header ───────────────────────────────────────── */
+/* ── Scan line ────────────────────────────────────────────── */
+.price-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(94,240,168,0.12) 30%, rgba(167,139,250,0.18) 70%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+  animation: priceScan 10s linear infinite;
+}
 .price-header {
   position: relative;
   z-index: 3;
@@ -3898,7 +3915,9 @@ body {
 }
 
 .price-card-elite {
-  border-color: rgba(245,197,66,0.25);
+  border-color: rgba(255,107,107,0.28);
+  background: rgba(255,107,107,0.04);
+  box-shadow: 0 0 24px rgba(255,107,107,0.06);
 }
 
 /* Corner decorations */
@@ -3992,6 +4011,26 @@ body {
   animation: priceLiveDot 1.2s ease-in-out infinite;
 }
 
+/* Elite LIVE badge (red variant) */
+.price-live-badge-elite {
+  background: rgba(255,107,107,0.1);
+  border-color: rgba(255,107,107,0.28);
+  color: #ff6b6b;
+}
+
+.price-live-dot-elite {
+  background: #ff6b6b;
+}
+
+/* Plan tagline */
+.price-tagline {
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(255,255,255,0.38);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
 /* Price row */
 .price-price-row {
   display: flex;
@@ -4077,6 +4116,19 @@ body {
   border-color: rgba(255,255,255,0.2);
 }
 
+/* Elite CTA — dark with red glow */
+.price-cta-btn-elite {
+  background: rgba(255,107,107,0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(255,107,107,0.3);
+}
+
+.price-cta-btn-elite:hover {
+  background: rgba(255,107,107,0.18);
+  border-color: rgba(255,107,107,0.5);
+  box-shadow: 0 0 18px rgba(255,107,107,0.2);
+}
+
 .price-cta-arrow {
   flex-shrink: 0;
   transition: transform 0.2s ease;
@@ -4111,9 +4163,76 @@ body {
   line-height: 1.45;
 }
 
+/* Feature icon base */
+.price-feat-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* check: inherits plan accentColor via stroke attribute */
 .price-check-icon {
   flex-shrink: 0;
   margin-top: 1px;
+}
+
+/* no: muted crossed-out */
+.price-feature-item-no {
+  color: rgba(255,255,255,0.28);
+}
+
+.price-icon-no {
+  color: rgba(255,255,255,0.22);
+}
+
+/* lock: red/crimson for Elite hard blocks */
+.price-feature-item-lock {
+  color: rgba(255,107,107,0.85);
+}
+
+.price-icon-lock {
+  color: #ff6b6b;
+}
+
+/* warn: orange/amber for skippable Pro features */
+.price-feature-item-warn {
+  color: rgba(255,160,60,0.9);
+}
+
+.price-icon-warn {
+  color: #ffa03c;
+}
+
+/* eye: blue for Core passive/display features */
+.price-feature-item-eye {
+  color: rgba(96,165,250,0.9);
+}
+
+.price-icon-eye {
+  color: #60a5fa;
+}
+
+/* soon: muted gray with badge */
+.price-feature-item-soon {
+  color: rgba(255,255,255,0.42);
+  align-items: center;
+}
+
+.price-icon-soon {
+  color: rgba(255,255,255,0.3);
+}
+
+.price-soon-badge {
+  margin-left: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+  padding: 1px 6px;
+  white-space: nowrap;
 }
 
 .price-feature-divider-text {
@@ -4445,11 +4564,13 @@ body {
   .price-glow-purple,
   .price-glow-gold { animation: none; }
   .price-popular-dot { animation: none; }
-  .price-live-dot { animation: none; }
+  .price-live-dot,
+  .price-live-dot-elite { animation: none; }
   .price-card-popular { animation: none; }
   .price-toggle-btn { transition: none; }
   .price-faq-content { transition: none; }
   .price-faq-icon { transition: none; }
+  .price-scan-line { animation: none; }
   .price-card {
     opacity: 1;
     transition: none;

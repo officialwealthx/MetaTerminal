@@ -8,8 +8,8 @@ const PRICING_JSON_LD = {
   "@type": "Product",
   name: "MetaTerminal",
   description:
-    "Trader Protection OS that detects emotional trading patterns in real time and automatically blocks dangerous trades.",
-  url: "https://metaterminal.app",
+    "The only trading tool that actively blocks emotional trades. Real-time Safety Score, behavioral analysis, and automated protection.",
+  url: "https://metaterminal.app/pricing",
   brand: { "@type": "Brand", name: "MetaTerminal" },
   offers: [
     {
@@ -17,7 +17,7 @@ const PRICING_JSON_LD = {
       name: "Free",
       price: "0",
       priceCurrency: "CHF",
-      url: "https://metaterminal.app/register",
+      url: "https://metaterminal.app/pricing",
       availability: "https://schema.org/InStock",
       priceValidUntil: "2026-12-31",
     },
@@ -26,7 +26,7 @@ const PRICING_JSON_LD = {
       name: "Core",
       price: "29",
       priceCurrency: "CHF",
-      url: "https://metaterminal.app/register",
+      url: "https://metaterminal.app/pricing",
       availability: "https://schema.org/InStock",
       priceValidUntil: "2026-12-31",
     },
@@ -35,7 +35,7 @@ const PRICING_JSON_LD = {
       name: "Pro",
       price: "49",
       priceCurrency: "CHF",
-      url: "https://metaterminal.app/register",
+      url: "https://metaterminal.app/pricing",
       availability: "https://schema.org/InStock",
       priceValidUntil: "2026-12-31",
     },
@@ -44,100 +44,149 @@ const PRICING_JSON_LD = {
       name: "Elite Sentinel",
       price: "89",
       priceCurrency: "CHF",
-      url: "https://metaterminal.app/register",
+      url: "https://metaterminal.app/pricing",
       availability: "https://schema.org/InStock",
       priceValidUntil: "2026-12-31",
     },
   ],
 };
 
+/* ─── Types ──────────────────────────────────────────────────────────────── */
+type FeatureIcon = "check" | "lock" | "warn" | "eye" | "no" | "soon" | "divider";
+interface FeatureItem {
+  text: string;
+  type: FeatureIcon;
+}
+
 /* ─── Plan Data ──────────────────────────────────────────────────────────── */
 const PLANS = [
   {
     id: "free",
     name: "Free",
+    tagline: "Start tracking. Start seeing.",
     monthlyPrice: 0,
     annualPrice: 0,
-    description: "For beginners exploring emotional awareness",
-    cta: "Get Started",
+    annualSavings: "",
+    description: "Start for free. No credit card required.",
+    cta: "Start Free",
     ctaHref: "/register",
     popular: false,
     elite: false,
     accentColor: "#5ef0a8",
     features: [
-      { text: "Safety Score™ (basic)", divider: false },
-      { text: "Daily emotional summary", divider: false },
-      { text: "1 connected account", divider: false },
-      { text: "Community access", divider: false },
-      { text: "Basic session tracking", divider: false },
-    ],
+      { text: "Safety Score™ — 1× daily calculation", type: "check" },
+      { text: "Trade Journal — today only, resets at midnight", type: "check" },
+      { text: "Equity Curve — today only", type: "check" },
+      { text: "Win Rate & CRV — today only", type: "check" },
+      { text: "News Alerts — 1× email, high-impact events", type: "check" },
+      { text: "1 Connected Account", type: "check" },
+      { text: "MT4 · MT5 · cTrader", type: "check" },
+      { text: "Score History — locked", type: "lock" },
+      { text: "No protection tools", type: "no" },
+      { text: "No analytics", type: "no" },
+    ] as FeatureItem[],
   },
   {
     id: "core",
     name: "Core",
+    tagline: "See everything. Know everything. Every week, delivered.",
     monthlyPrice: 29,
-    annualPrice: 23,
-    description: "For serious traders wanting basic protection",
-    cta: "Start Core",
+    annualPrice: 24,
+    annualSavings: "Save 17%",
+    description: "Full visibility into your trading patterns.",
+    cta: "Get Core",
     ctaHref: "/register",
     popular: false,
     elite: false,
-    accentColor: "#a78bfa",
+    accentColor: "#60a5fa",
     features: [
-      { text: "Everything in Free, plus:", divider: true },
-      { text: "Real time Safety Score™", divider: false },
-      { text: "Revenge trade detection", divider: false },
-      { text: "FOMO alerts", divider: false },
-      { text: "Up to 3 connected accounts", divider: false },
-      { text: "Email notifications", divider: false },
-      { text: "7 day session history", divider: false },
-    ],
+      { text: "Everything in Free, plus:", type: "divider" },
+      { text: "Real-Time Safety Score™ + Full History", type: "eye" },
+      { text: "Unlimited Journal History — forever", type: "eye" },
+      { text: "Full Equity Curve — historical, zoomable", type: "eye" },
+      { text: "Complete Win Rate & CRV Tracking", type: "eye" },
+      { text: "Drawdown Tracker — current + max + history", type: "eye" },
+      { text: "Daily P&L Overview", type: "eye" },
+      { text: "Weekly Intelligence Report — email + PDF", type: "check" },
+      { text: "Passive Pattern Labels — ⚠️ Revenge, ⚠️ FOMO tags", type: "eye" },
+      { text: "Daily Score Summary — email", type: "check" },
+      { text: "CSV Export", type: "check" },
+      { text: "3 Connected Accounts", type: "check" },
+      { text: "No active protection (no pop-ups)", type: "no" },
+      { text: "No deep analytics", type: "no" },
+    ] as FeatureItem[],
   },
   {
     id: "pro",
     name: "Pro",
+    tagline: "Your trading coach that never sleeps.",
     monthlyPrice: 49,
-    annualPrice: 39,
-    description: "For active traders needing full behavioral analytics",
-    cta: "Start Pro",
+    annualPrice: 40,
+    annualSavings: "Save 18%",
+    description: "Active protection and deep behavioral insights.",
+    cta: "Get Pro",
     ctaHref: "/register",
     popular: true,
     elite: false,
     accentColor: "#a78bfa",
     features: [
-      { text: "Everything in Core, plus:", divider: true },
-      { text: "Full behavioral analytics", divider: false },
-      { text: "Oversize lot guard", divider: false },
-      { text: "Tilt detector", divider: false },
-      { text: "Cooldown timer", divider: false },
-      { text: "Unlimited connected accounts", divider: false },
-      { text: "Priority support", divider: false },
-      { text: "30 day session history", divider: false },
-      { text: "Custom alert rules", divider: false },
-    ],
+      { text: "Everything in Core, plus:", type: "divider" },
+      { text: "Revenge Trade Blocker — skippable pop-up", type: "warn" },
+      { text: "FOMO Shield — skippable pop-up", type: "warn" },
+      { text: "Oversize Lot Guard — skippable warning", type: "warn" },
+      { text: "Tilt Detector — skippable warning", type: "warn" },
+      { text: "Cooldown Mode — auto-pause, skippable", type: "warn" },
+      { text: "Max Drawdown Guard — skippable", type: "warn" },
+      { text: "Daily Loss Limit — skippable", type: "warn" },
+      { text: "RRR Enforcer — skippable", type: "warn" },
+      { text: "Danger Alerts — real-time pop-up + sound", type: "check" },
+      { text: "Smart News Alerts — 1h / 30min / 5min", type: "check" },
+      { text: "Zone Change Alerts — automatic", type: "check" },
+      { text: "Session Analytics — London / NY / Tokyo / Sydney", type: "check" },
+      { text: "Pair Performance Analysis", type: "check" },
+      { text: "Emotion Heatmap — day × time matrix", type: "check" },
+      { text: "Streak Analytics & Sentiment Tracker", type: "check" },
+      { text: "Session Replay", type: "check" },
+      { text: "Trading Plan Builder + Compliance Score", type: "check" },
+      { text: "Pro Weekly Report — heatmap + action items", type: "check" },
+      { text: "CSV + PDF Export", type: "check" },
+      { text: "10 Connected Accounts", type: "check" },
+      { text: "Priority Email Support", type: "check" },
+    ] as FeatureItem[],
   },
   {
     id: "elite",
     name: "Elite Sentinel",
+    tagline: "Zero compromise. Sentinel protects — even from yourself.",
     monthlyPrice: 89,
-    annualPrice: 71,
-    description: "For professional traders demanding maximum protection",
-    cta: "Go Elite",
+    annualPrice: 72,
+    annualSavings: "Save 19%",
+    description: "Total lockdown. Maximum protection. No exceptions.",
+    cta: "Get Elite",
     ctaHref: "/register",
     popular: false,
     elite: true,
-    accentColor: "#f5c542",
+    accentColor: "#ff6b6b",
     features: [
-      { text: "Everything in Pro, plus:", divider: true },
-      { text: "Sentinel™ automatic trade blocking", divider: false },
-      { text: "Full account protection mode", divider: false },
-      { text: "Advanced drawdown monitoring", divider: false },
-      { text: "RRR enforcer", divider: false },
-      { text: "Session replay with AI insights", divider: false },
-      { text: "Dedicated account manager", divider: false },
-      { text: "Unlimited session history", divider: false },
-      { text: "API access", divider: false },
-    ],
+      { text: "Everything in Pro, plus:", type: "divider" },
+      { text: "Sentinel Mode™ — total lockdown, NOT skippable", type: "lock" },
+      { text: "Hard Cooldown — timer must expire", type: "lock" },
+      { text: "Hard Daily Loss Limit — locked until tomorrow", type: "lock" },
+      { text: "Hard Max Drawdown — account auto-protected", type: "lock" },
+      { text: "Hard Lot Size Lock — oversized trades blocked", type: "lock" },
+      { text: "Hard RRR Lock — below min CRV blocked", type: "lock" },
+      { text: "Custom Rules Engine — IF/THEN/AND/OR logic", type: "check" },
+      { text: "Prop Firm Mode — FTMO / MyFundedFX / The5%ers", type: "check" },
+      { text: "Challenge Tracker + Health Score", type: "check" },
+      { text: "Elite Weekly Report — AI recommendations", type: "check" },
+      { text: "API Access — REST API", type: "check" },
+      { text: "Webhook Notifications — Discord, Telegram, Slack", type: "check" },
+      { text: "Multi-Account Dashboard", type: "check" },
+      { text: "White-Glove Onboarding — 1:1 setup call", type: "check" },
+      { text: "Unlimited Connected Accounts", type: "check" },
+      { text: "Priority Support + Personal Contact", type: "check" },
+      { text: "Community Leaderboard", type: "soon" },
+    ] as FeatureItem[],
   },
 ];
 
@@ -430,6 +479,9 @@ export default function PricingSection() {
           <div className="price-glow price-glow-gold" />
         </div>
 
+        {/* Scan line */}
+        <div className="price-scan-line" aria-hidden="true" />
+
         {/* ── A. Section Header ── */}
         <div className="price-header">
           <div className="price-badge" role="note" aria-label="Pricing section">
@@ -470,9 +522,9 @@ export default function PricingSection() {
             Annual
             <span
               className="price-toggle-save"
-              aria-label="Save 20 percent when billed annually"
+              aria-label="Save up to 19 percent when billed annually"
             >
-              Save 20%
+              Save up to 19%
             </span>
           </button>
         </div>
@@ -527,7 +579,7 @@ export default function PricingSection() {
                     className="price-shield-icon"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#f5c542"
+                    stroke="#ff6b6b"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -546,17 +598,20 @@ export default function PricingSection() {
                 </h3>
                 {plan.elite && (
                   <div
-                    className="price-live-badge"
+                    className="price-live-badge price-live-badge-elite"
                     aria-label="Live protection active"
                   >
                     <span
-                      className="price-live-dot"
+                      className="price-live-dot price-live-dot-elite"
                       aria-hidden="true"
                     />
                     <span>LIVE</span>
                   </div>
                 )}
               </div>
+
+              {/* Tagline */}
+              <p className="price-tagline">{plan.tagline}</p>
 
               {/* Price display */}
               <div
@@ -575,7 +630,11 @@ export default function PricingSection() {
 
               {/* Billing note */}
               <p className="price-billing-note">
-                {isAnnual ? "Billed annually" : "Billed monthly"}
+                {isAnnual
+                  ? plan.annualSavings
+                    ? `Billed annually · ${plan.annualSavings}`
+                    : "Billed annually"
+                  : "Billed monthly"}
               </p>
 
               {/* Description */}
@@ -584,7 +643,7 @@ export default function PricingSection() {
               {/* CTA button */}
               <a
                 href={plan.ctaHref}
-                className={`price-cta-btn${plan.popular ? " price-cta-btn-primary" : " price-cta-btn-ghost"}`}
+                className={`price-cta-btn${plan.popular ? " price-cta-btn-primary" : plan.elite ? " price-cta-btn-elite" : " price-cta-btn-ghost"}`}
                 aria-label={`${plan.cta} — ${plan.name} plan`}
               >
                 {plan.cta}
@@ -612,15 +671,133 @@ export default function PricingSection() {
                 className="price-feature-list"
                 aria-label={`${plan.name} plan features`}
               >
-                {plan.features.map((feature, fi) =>
-                  feature.divider ? (
-                    <li key={fi} className="price-feature-divider-text">
-                      {feature.text}
-                    </li>
-                  ) : (
+                {plan.features.map((feature, fi) => {
+                  if (feature.type === "divider") {
+                    return (
+                      <li key={fi} className="price-feature-divider-text">
+                        {feature.text}
+                      </li>
+                    );
+                  }
+                  if (feature.type === "no") {
+                    return (
+                      <li key={fi} className="price-feature-item price-feature-item-no">
+                        <svg
+                          className="price-feat-icon price-icon-no"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          width="14"
+                          height="14"
+                          aria-hidden="true"
+                        >
+                          <line x1="4" y1="4" x2="12" y2="12" />
+                          <line x1="12" y1="4" x2="4" y2="12" />
+                        </svg>
+                        {feature.text}
+                      </li>
+                    );
+                  }
+                  if (feature.type === "lock") {
+                    return (
+                      <li key={fi} className="price-feature-item price-feature-item-lock">
+                        <svg
+                          className="price-feat-icon price-icon-lock"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          width="14"
+                          height="14"
+                          aria-hidden="true"
+                        >
+                          <rect x="3" y="7" width="10" height="8" rx="1.5" />
+                          <path d="M5 7V5a3 3 0 0 1 6 0v2" />
+                        </svg>
+                        {feature.text}
+                      </li>
+                    );
+                  }
+                  if (feature.type === "warn") {
+                    return (
+                      <li key={fi} className="price-feature-item price-feature-item-warn">
+                        <svg
+                          className="price-feat-icon price-icon-warn"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          width="14"
+                          height="14"
+                          aria-hidden="true"
+                        >
+                          <path d="M8 2L1 14h14L8 2z" />
+                          <line x1="8" y1="7" x2="8" y2="10" />
+                          <circle cx="8" cy="12.5" r="0.5" fill="currentColor" />
+                        </svg>
+                        {feature.text}
+                      </li>
+                    );
+                  }
+                  if (feature.type === "eye") {
+                    return (
+                      <li key={fi} className="price-feature-item price-feature-item-eye">
+                        <svg
+                          className="price-feat-icon price-icon-eye"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          width="14"
+                          height="14"
+                          aria-hidden="true"
+                        >
+                          <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z" />
+                          <circle cx="8" cy="8" r="2" />
+                        </svg>
+                        {feature.text}
+                      </li>
+                    );
+                  }
+                  if (feature.type === "soon") {
+                    return (
+                      <li key={fi} className="price-feature-item price-feature-item-soon">
+                        <svg
+                          className="price-feat-icon price-icon-soon"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          width="14"
+                          height="14"
+                          aria-hidden="true"
+                        >
+                          <circle cx="8" cy="8" r="6" />
+                          <polyline points="8 5 8 8 10 10" />
+                        </svg>
+                        {feature.text}
+                        <span className="price-soon-badge" aria-label="Coming soon">
+                          Soon
+                        </span>
+                      </li>
+                    );
+                  }
+                  /* default: check */
+                  return (
                     <li key={fi} className="price-feature-item">
                       <svg
-                        className="price-check-icon"
+                        className="price-feat-icon price-check-icon"
                         viewBox="0 0 16 16"
                         fill="none"
                         stroke={plan.accentColor}
@@ -635,8 +812,8 @@ export default function PricingSection() {
                       </svg>
                       {feature.text}
                     </li>
-                  ),
-                )}
+                  );
+                })}
               </ul>
             </div>
           ))}
