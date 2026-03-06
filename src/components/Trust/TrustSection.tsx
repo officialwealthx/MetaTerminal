@@ -334,7 +334,6 @@ export default function TrustSection() {
         {/* H2 Heading */}
         <h2 className="trust-h2">
           <span className="trust-h2-white">Trusted by Traders</span>
-          <br />
           <span className="trust-h2-gradient">Around the World.</span>
         </h2>
 
