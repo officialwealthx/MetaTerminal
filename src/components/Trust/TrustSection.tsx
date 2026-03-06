@@ -102,46 +102,6 @@ const STAT_CARDS = [
   },
 ];
 
-/* ─── Platform Badges ────────────────────────────────────────────────────── */
-const PLATFORMS = [
-  {
-    name: "MetaTrader 4",
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true" width="20" height="20" fill="none">
-        <rect width="32" height="32" rx="8" fill="rgba(94,240,168,0.15)" />
-        <text x="16" y="22" textAnchor="middle" fill="#5ef0a8" fontSize="11" fontWeight="800" fontFamily="monospace">MT4</text>
-      </svg>
-    ),
-  },
-  {
-    name: "MetaTrader 5",
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true" width="20" height="20" fill="none">
-        <rect width="32" height="32" rx="8" fill="rgba(167,139,250,0.15)" />
-        <text x="16" y="22" textAnchor="middle" fill="#a78bfa" fontSize="11" fontWeight="800" fontFamily="monospace">MT5</text>
-      </svg>
-    ),
-  },
-  {
-    name: "cTrader",
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true" width="20" height="20" fill="none">
-        <rect width="32" height="32" rx="8" fill="rgba(94,240,168,0.15)" />
-        <text x="16" y="22" textAnchor="middle" fill="#5ef0a8" fontSize="12" fontWeight="800" fontFamily="monospace">cT</text>
-      </svg>
-    ),
-  },
-  {
-    name: "TradingView",
-    icon: (
-      <svg viewBox="0 0 32 32" aria-hidden="true" width="20" height="20" fill="none">
-        <rect width="32" height="32" rx="8" fill="rgba(245,197,66,0.15)" />
-        <text x="16" y="22" textAnchor="middle" fill="#f5c542" fontSize="11" fontWeight="800" fontFamily="monospace">TV</text>
-      </svg>
-    ),
-  },
-];
-
 /* ─── Scramble Counter ──────────────────────────────────────────────────── */
 const DIGITS = "0123456789";
 
@@ -317,17 +277,6 @@ export default function TrustSection() {
           <strong>3,000+ traders</strong> across <strong>40+ countries</strong>{" "}
           trust MetaTerminal to protect their accounts from emotional trading decisions.
         </p>
-
-        {/* Platform Badges */}
-        <div className="trust-platforms" role="list" aria-label="Supported trading platforms">
-          {PLATFORMS.map((p) => (
-            <div key={p.name} className="trust-platform-badge" role="listitem">
-              <span className="trust-platform-icon" aria-hidden="true">{p.icon}</span>
-              <span className="trust-platform-name">{p.name}</span>
-            </div>
-          ))}
-          <p className="trust-platform-sub">over 3,000 trusted users</p>
-        </div>
 
         {/* Stat Cards — Command Center style */}
         <div className="trust-stats" role="list" aria-label="MetaTerminal statistics">
