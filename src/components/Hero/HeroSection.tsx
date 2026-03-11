@@ -7,7 +7,6 @@ import HeroHeading from "./HeroHeading";
 import HeroSubtitle from "./HeroSubtitle";
 import HeroCTA from "./HeroCTA";
 import HeroDashboard from "./HeroDashboard";
-import HeroFloatingPills from "./HeroFloatingPills";
 import HeroPlatforms from "./HeroPlatforms";
 
 const JSON_LD = {
@@ -102,7 +101,6 @@ export default function HeroSection() {
         </div>
 
         <div className="hero-dashboard-wrap">
-          <HeroFloatingPills />
           <HeroDashboard />
         </div>
 
