@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useCallback } from "react";
+import React from "react";
 
 /* ─── Testimonial Data ─────────────────────────────────────────────────── */
 interface Testimonial {
@@ -12,6 +12,7 @@ interface Testimonial {
 }
 
 const TESTIMONIALS: Testimonial[] = [
+  /* ── Row 1 (first 6) ── */
   {
     name: "Marcus T.",
     location: "London, UK",
@@ -60,6 +61,55 @@ const TESTIMONIALS: Testimonial[] = [
     stars: 5,
     color: "#ff6b6b",
   },
+  /* ── Row 2 (second 6) ── */
+  {
+    name: "Thomas W.",
+    location: "Zurich, CH",
+    quote:
+      "The cooldown timer alone paid for my subscription. It forced me to step away when I needed it most.",
+    stars: 5,
+    color: "#f5c542",
+  },
+  {
+    name: "Priya S.",
+    location: "Mumbai, IN",
+    quote:
+      "I was skeptical at first, but after MetaTerminal blocked my third FOMO trade in a week, I became a believer.",
+    stars: 5,
+    color: "#ff6b6b",
+  },
+  {
+    name: "Oliver H.",
+    location: "Berlin, DE",
+    quote:
+      "The emotion heatmap revealed I make 80% of my bad trades between 2-4pm. Game-changing insight.",
+    stars: 5,
+    color: "#a78bfa",
+  },
+  {
+    name: "Rachel C.",
+    location: "Chicago, US",
+    quote:
+      "Prop firm mode saved my FTMO challenge. MetaTerminal kept me within the drawdown limits when I would have blown it.",
+    stars: 5,
+    color: "#5ef0a8",
+  },
+  {
+    name: "Kenji T.",
+    location: "Tokyo, JP",
+    quote:
+      "The weekly intelligence report is like having a personal trading psychologist. Worth every franc.",
+    stars: 4,
+    color: "#f5c542",
+  },
+  {
+    name: "Sofia B.",
+    location: "São Paulo, BR",
+    quote:
+      "My win rate went from 38% to 54% in two months. Not because I traded better, but because MetaTerminal stopped me from trading worse.",
+    stars: 5,
+    color: "#ff6b6b",
+  },
 ];
 
 /* ─── Star Renderer ────────────────────────────────────────────────────── */
@@ -78,6 +128,47 @@ function StarRating({ count }: { count: number }) {
           <path d="M8 1l1.85 3.75L14 5.49l-3 2.92.71 4.12L8 10.4l-3.71 2.13.71-4.12-3-2.92 4.15-.74z" />
         </svg>
       ))}
+    </div>
+  );
+}
+
+/* ─── Single Card ───────────────────────────────────────────────────────── */
+function TestiCard({ t }: { t: Testimonial }) {
+  return (
+    <div
+      className="testi-card"
+      style={{ "--card-color": t.color } as React.CSSProperties}
+      role="listitem"
+    >
+      {/* Corner brackets */}
+      <span className="testi-card-corner testi-card-corner-tl" aria-hidden="true" />
+      <span className="testi-card-corner testi-card-corner-br" aria-hidden="true" />
+
+      {/* Quote */}
+      <blockquote className="testi-quote">
+        <p className="testi-quote-text">&ldquo;{t.quote}&rdquo;</p>
+      </blockquote>
+
+      {/* Stars */}
+      <StarRating count={t.stars} />
+
+      {/* Author */}
+      <div className="testi-author">
+        <div
+          className="testi-avatar"
+          style={{ "--avatar-color": t.color } as React.CSSProperties}
+          aria-hidden="true"
+        >
+          {t.name.charAt(0)}
+        </div>
+        <div className="testi-author-info">
+          <span className="testi-author-name">{t.name}</span>
+          <span className="testi-author-location">{t.location}</span>
+        </div>
+      </div>
+
+      {/* Bottom gradient accent line */}
+      <span className="testi-card-bottom-line" aria-hidden="true" />
     </div>
   );
 }
@@ -105,56 +196,12 @@ const TESTIMONIALS_JSON_LD = {
   })),
 };
 
+/* ─── Row 1 & Row 2 testimonials ────────────────────────────────────────── */
+const ROW1 = TESTIMONIALS.slice(0, 6);
+const ROW2 = TESTIMONIALS.slice(6, 12);
+
 /* ─── Main Component ────────────────────────────────────────────────────── */
 export default function TestimonialsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  const setCardRef = useCallback(
-    (i: number) => (el: HTMLDivElement | null) => {
-      cardRefs.current[i] = el;
-    },
-    [],
-  );
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReduced) {
-      cardRefs.current.forEach((el) => {
-        if (el) {
-          el.style.opacity = "1";
-          el.style.transform = "translateY(0)";
-        }
-      });
-      return;
-    }
-
-    const grid = sectionRef.current?.querySelector(".testi-grid");
-    if (!grid) return;
-
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        if (!entries[0].isIntersecting) return;
-
-        cardRefs.current.forEach((el, i) => {
-          if (!el) return;
-          setTimeout(() => {
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-          }, i * 100);
-        });
-
-        observerRef.current?.disconnect();
-      },
-      { threshold: 0.1 },
-    );
-
-    observerRef.current.observe(grid);
-    return () => observerRef.current?.disconnect();
-  }, []);
-
   return (
     <>
       <script
@@ -163,7 +210,6 @@ export default function TestimonialsSection() {
       />
       <section
         id="testimonials"
-        ref={sectionRef}
         className="testi-section"
         aria-label="Testimonials — Trusted by Traders Worldwide"
       >
@@ -194,43 +240,41 @@ export default function TestimonialsSection() {
           <p className="testi-sub">Real traders. Real protection. Real results.</p>
         </div>
 
-        {/* ── Cards Grid ── */}
-        <div className="testi-grid" role="list">
-          {TESTIMONIALS.map((t, i) => (
-            <div
-              key={t.name}
-              ref={setCardRef(i)}
-              className="testi-card"
-              style={{ "--card-color": t.color } as React.CSSProperties}
-              role="listitem"
-            >
-              {/* Corner brackets */}
-              <span className="testi-card-corner testi-card-corner-tl" aria-hidden="true" />
-              <span className="testi-card-corner testi-card-corner-br" aria-hidden="true" />
-
-              {/* Quote */}
-              <blockquote className="testi-quote">
-                <p className="testi-quote-text">&ldquo;{t.quote}&rdquo;</p>
-              </blockquote>
-
-              {/* Stars */}
-              <StarRating count={t.stars} />
-
-              {/* Author */}
-              <div className="testi-author">
-                <div
-                  className="testi-avatar"
-                  style={{ "--avatar-color": t.color } as React.CSSProperties}
-                  aria-hidden="true"
-                >
-                  {t.name.charAt(0)}
-                </div>
-                <div className="testi-author-info">
-                  <span className="testi-author-name">{t.name}</span>
-                  <span className="testi-author-location">{t.location}</span>
-                </div>
-              </div>
+        {/* ── Infinite Marquee ── */}
+        <div className="testi-marquee-outer" aria-hidden="false">
+          {/* Row 1 — scrolls left */}
+          <div className="testi-marquee-wrap" aria-label="Testimonials row 1">
+            <div className="testi-marquee-row testi-marquee-row-left" role="list">
+              {/* Original set */}
+              {ROW1.map((t) => (
+                <TestiCard key={`r1a-${t.name}`} t={t} />
+              ))}
+              {/* Duplicate for seamless loop */}
+              {ROW1.map((t) => (
+                <TestiCard key={`r1b-${t.name}`} t={t} />
+              ))}
             </div>
+          </div>
+
+          {/* Row 2 — scrolls right */}
+          <div className="testi-marquee-wrap" aria-label="Testimonials row 2">
+            <div className="testi-marquee-row testi-marquee-row-right" role="list">
+              {/* Original set */}
+              {ROW2.map((t) => (
+                <TestiCard key={`r2a-${t.name}`} t={t} />
+              ))}
+              {/* Duplicate for seamless loop */}
+              {ROW2.map((t) => (
+                <TestiCard key={`r2b-${t.name}`} t={t} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Static grid fallback (shown via prefers-reduced-motion CSS) ── */}
+        <div className="testi-static-grid" role="list" aria-label="Testimonials">
+          {TESTIMONIALS.map((t) => (
+            <TestiCard key={`static-${t.name}`} t={t} />
           ))}
         </div>
 

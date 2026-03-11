@@ -72,6 +72,16 @@ body {
   50%     { r: 5; opacity: .5; }
 }
 
+@keyframes badgeShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes dashFloat {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-6px); }
+}
+
 /* ============================================================
    HERO SECTION — Layout
    ============================================================ */
@@ -87,12 +97,19 @@ body {
   justify-content: flex-start;
   padding: 80px 20px 60px;
   overflow: hidden;
-  gap: 40px;
+  gap: 28px;
+}
+
+@media (min-width: 481px) {
+  .hero-section {
+    gap: 36px;
+  }
 }
 
 @media (min-width: 769px) {
   .hero-section {
     padding: 90px 32px 60px;
+    gap: 36px;
   }
 }
 
@@ -106,7 +123,7 @@ body {
 @media (min-width: 1301px) {
   .hero-section {
     padding: 100px 60px 60px;
-    gap: 56px;
+    gap: 48px;
   }
 }
 
@@ -206,14 +223,17 @@ body {
   gap: 8px;
   padding: 6px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(120,90,255,0.4);
-  background: rgba(120,90,255,0.12);
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(18,17,22,0.9), rgba(18,17,22,0.9)) padding-box,
+    linear-gradient(90deg, rgba(120,90,255,0.3), rgba(94,240,168,0.5), rgba(120,90,255,0.3)) border-box;
+  background-size: auto, 200% auto;
   color: #c4b5fd;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.04em;
-  animation: hUp 0.6s ease both;
-  animation-delay: 0.1s;
+  animation: hUp 0.6s ease both, badgeShimmer 3s linear infinite;
+  animation-delay: 0.1s, 1s;
 }
 
 .hero-badge-dot {
@@ -240,7 +260,7 @@ body {
 
 .hero-h1-white {
   color: #fff;
-  text-shadow: 0 2px 24px rgba(0,0,0,0.6), 0 1px 6px rgba(0,0,0,0.8);
+  text-shadow: 0 2px 24px rgba(0,0,0,0.6), 0 1px 6px rgba(0,0,0,0.8), 0 2px 20px rgba(120,90,255,0.15);
 }
 
 .hero-h1-gradient {
@@ -249,7 +269,8 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: hGrad 6s ease infinite;
+  font-weight: 800;
+  animation: hGrad 5s ease infinite;
   filter: drop-shadow(0 2px 12px rgba(120,90,255,0.25));
 }
 
@@ -267,21 +288,22 @@ body {
   font-size: 15px;
   line-height: 1.65;
   color: rgba(255,255,255,0.75);
-  max-width: 560px;
+  max-width: 640px;
   text-align: center;
   text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+  text-wrap: balance;
   animation: hUp 0.6s ease both;
   animation-delay: 0.4s;
 }
 
 .hero-sub strong {
-  color: #fff;
+  color: #ffffff;
   font-weight: 600;
 }
 
-@media (min-width: 481px) { .hero-sub { max-width: 580px; } }
-@media (min-width: 769px) { .hero-sub { max-width: 620px; font-size: 16px; } }
-@media (min-width: 1025px) { .hero-sub { max-width: 660px; } }
+@media (min-width: 481px) { .hero-sub { max-width: 640px; } }
+@media (min-width: 769px) { .hero-sub { max-width: 640px; font-size: 16px; } }
+@media (min-width: 1025px) { .hero-sub { max-width: 640px; } }
 
 /* ============================================================
    HERO CTA BUTTONS
@@ -319,7 +341,8 @@ body {
   border: none;
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
   box-shadow: 0 4px 20px rgba(120,90,255,0.4), 0 1px 4px rgba(0,0,0,0.3);
 }
 
@@ -334,7 +357,9 @@ body {
 
 .hero-btn-filled:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(120,90,255,0.55), 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 28px rgba(120,90,255,0.55),
+              0 0 30px rgba(94,240,168,0.25),
+              0 2px 8px rgba(0,0,0,0.3);
 }
 
 .hero-btn-filled:hover::before {
@@ -342,11 +367,11 @@ body {
 }
 
 .hero-cta-arrow {
-  transition: transform 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
 .hero-btn-filled:hover .hero-cta-arrow {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 .hero-btn-ghost {
@@ -361,13 +386,15 @@ body {
   text-decoration: none;
   border: 1px solid rgba(255,255,255,0.18);
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition: color 0.3s cubic-bezier(0.4,0,0.2,1),
+              border-color 0.3s cubic-bezier(0.4,0,0.2,1),
+              background 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
 .hero-btn-ghost:hover {
   color: #fff;
-  border-color: rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
 }
 
 /* ============================================================
@@ -380,7 +407,9 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
   animation: hUp 0.6s ease both;
   animation-delay: 1.2s;
 }
@@ -391,11 +420,13 @@ body {
   gap: 6px;
   padding: 5px 12px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.1);
   font-size: 12px;
   color: rgba(255,255,255,0.75);
   font-weight: 500;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .platform-dot {
@@ -464,8 +495,7 @@ body {
   border: 1px solid rgba(255,255,255,0.10);
   box-shadow: 0 24px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(120,90,255,0.12);
   overflow: hidden;
-  animation: hRise 0.7s ease both;
-  animation-delay: 0.8s;
+  animation: hRise 0.7s ease both, dashFloat 6s ease-in-out 1.5s infinite;
 }
 
 .dash-title-bar {
@@ -4494,7 +4524,7 @@ body {
 .testi-section {
   position: relative;
   background: #121116;
-  padding: 80px 20px 120px;
+  padding: 80px 0 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -4579,6 +4609,7 @@ body {
   margin-bottom: 56px;
   max-width: 640px;
   width: 100%;
+  padding: 0 20px;
 }
 
 /* ─── Badge ──────────────────────────────────────────────────── */
@@ -4645,11 +4676,74 @@ body {
   animation: testiFadeUp 0.7s 0.2s cubic-bezier(0.23,1,0.32,1) both;
 }
 
-/* ─── Cards grid ─────────────────────────────────────────────── */
-.testi-grid {
+/* ─── Marquee outer wrapper ──────────────────────────────────── */
+.testi-marquee-outer {
   position: relative;
   z-index: 3;
-  display: grid;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ─── Per-row marquee container — clips & adds fade masks ────── */
+.testi-marquee-wrap {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #121116 8%,
+    #121116 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #121116 8%,
+    #121116 92%,
+    transparent 100%
+  );
+}
+
+/* ─── The scrolling flex track ───────────────────────────────── */
+.testi-marquee-row {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ─── Direction animations ───────────────────────────────────── */
+.testi-marquee-row-left {
+  animation: marqueeLeft 44s linear infinite;
+}
+
+.testi-marquee-row-right {
+  animation: marqueeRight 44s linear infinite;
+}
+
+@keyframes marqueeLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* ─── Pause on hover ─────────────────────────────────────────── */
+.testi-marquee-wrap:hover .testi-marquee-row {
+  animation-play-state: paused;
+}
+
+/* ─── Static grid (shown only when prefers-reduced-motion) ───── */
+.testi-static-grid {
+  display: none;
+  position: relative;
+  z-index: 3;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   width: 100%;
@@ -4662,25 +4756,27 @@ body {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 16px;
-  padding: 28px 24px 24px;
+  padding: 28px 24px 28px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   text-align: left;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.55s cubic-bezier(0.23,1,0.32,1),
-              transform 0.55s cubic-bezier(0.23,1,0.32,1),
+  min-width: 340px;
+  max-width: 380px;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1),
               border-color 0.3s ease,
               box-shadow 0.3s ease;
 }
 
 .testi-card:hover {
-  border-color: rgba(255,255,255,0.1);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.3),
-              0 0 0 1px rgba(255,255,255,0.05);
+  transform: scale(1.03);
+  border-color: var(--card-color, rgba(255,255,255,0.15));
+  box-shadow: 0 8px 40px rgba(0,0,0,0.35),
+              0 0 0 1px rgba(255,255,255,0.07),
+              0 0 20px color-mix(in srgb, var(--card-color, #5ef0a8) 20%, transparent);
 }
 
 /* ─── Corner brackets ────────────────────────────────────────── */
@@ -4708,7 +4804,29 @@ body {
 
 .testi-card:hover .testi-card-corner {
   border-color: var(--card-color, #5ef0a8);
-  opacity: 0.5;
+  opacity: 0.6;
+}
+
+/* ─── Bottom gradient accent line ────────────────────────────── */
+.testi-card-bottom-line {
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--card-color, #5ef0a8) 50%,
+    transparent 100%
+  );
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+
+.testi-card:hover .testi-card-bottom-line {
+  opacity: 0.7;
 }
 
 /* ─── Quote ──────────────────────────────────────────────────── */
@@ -4720,8 +4838,8 @@ body {
 
 .testi-quote-text {
   font-size: 14px;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.7;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
   margin: 0;
   font-style: italic;
 }
@@ -4754,20 +4872,21 @@ body {
   padding-top: 16px;
 }
 
+/* ─── Avatar: clean sans-serif, consistent sizing ────────────── */
 .testi-avatar {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--avatar-color, #5ef0a8);
+  background: color-mix(in srgb, var(--avatar-color, #5ef0a8) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--avatar-color, #5ef0a8) 30%, transparent);
   color: var(--avatar-color, #5ef0a8);
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-family: "Courier New", monospace;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
 }
 
 .testi-author-info {
@@ -4785,46 +4904,77 @@ body {
 .testi-author-location {
   font-size: 11px;
   color: rgba(255,255,255,0.4);
-  font-family: "Courier New", monospace;
   letter-spacing: 0.04em;
 }
 
-/* ─── Tablet: 2 columns ──────────────────────────────────────── */
-@media (max-width: 1199px) {
-  .testi-grid {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 760px;
-  }
-}
-
-/* ─── Mobile: 1 column ───────────────────────────────────────── */
+/* ─── Mobile: reduce section padding ────────────────────────── */
 @media (max-width: 767px) {
   .testi-section {
-    padding: 60px 16px 100px;
+    padding: 60px 0 100px;
   }
 
-  .testi-grid {
-    grid-template-columns: 1fr;
-    max-width: 480px;
-    gap: 14px;
+  .testi-marquee-wrap {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #121116 5%,
+      #121116 95%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #121116 5%,
+      #121116 95%,
+      transparent 100%
+    );
   }
 
   .testi-card {
-    padding: 22px 18px 20px;
+    min-width: 280px;
+    max-width: 320px;
+    padding: 22px 18px 26px;
   }
 }
 
-/* ─── prefers-reduced-motion ─────────────────────────────────── */
+/* ─── prefers-reduced-motion — show static grid instead ─────── */
 @media (prefers-reduced-motion: reduce) {
   .testi-badge { animation: none; }
   .testi-badge-dot { animation: none; }
   .testi-h2 { animation: none; }
   .testi-h2-gradient { animation: none; }
   .testi-sub { animation: none; }
-  .testi-card {
-    opacity: 1;
+
+  /* Hide marquee, show static fallback grid */
+  .testi-marquee-outer { display: none; }
+  .testi-static-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1140px;
+  }
+
+  /* Cards in static grid don't need min/max-width constraints */
+  .testi-static-grid .testi-card {
+    min-width: unset;
+    max-width: unset;
     transform: none;
     transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 1199px) {
+  .testi-static-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 760px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 767px) {
+  .testi-static-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    gap: 14px;
+    padding: 0 16px;
   }
 }
 
