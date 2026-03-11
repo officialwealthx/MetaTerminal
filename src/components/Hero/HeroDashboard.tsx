@@ -14,7 +14,7 @@ export default function HeroDashboard() {
           <span className="dot dot-yellow" />
           <span className="dot dot-green" />
         </div>
-        <span className="dash-title-text">MetaTerminal — Dashboard v2.4</span>
+        <span className="dash-title-text">MetaTerminal — Dashboard v3.0</span>
         <span className="dash-live">
           <span className="dash-live-dot" />
           Live
