@@ -1,27 +1,29 @@
-import { HeroSection } from "@/components/Hero";
-import { TrustSection } from "@/components/Trust";
-import { ProblemSection } from "@/components/Problem";
-import { SolutionSection } from "@/components/Solution";
-import { FeaturesSection } from "@/components/Features";
-import { PricingSection } from "@/components/Pricing";
-import { TestimonialsSection } from "@/components/Testimonials";
-import { FAQSection } from "@/components/FAQ";
-import { FinalCTASection } from "@/components/CTA";
-import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/sections/navbar";
+import { Hero } from "@/components/sections/hero";
+import { TrustedBy } from "@/components/sections/trusted-by";
+import { Features } from "@/components/sections/features";
+import { Scores } from "@/components/sections/scores";
+import { AiSection } from "@/components/sections/ai-section";
+import { Pricing } from "@/components/sections/pricing";
+import { CommunityPreview } from "@/components/sections/community-preview";
+import { CtaSection } from "@/components/sections/cta";
+import { Footer } from "@/components/sections/footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <HeroSection />
-      <TrustSection />
-      <ProblemSection />
-      <SolutionSection />
-      <FeaturesSection />
-      <PricingSection />
-      <TestimonialsSection />
-      <FAQSection />
-      <FinalCTASection />
+    <>
+      <Navbar />
+      <main>
+        <Hero />
+        <TrustedBy />
+        <Features />
+        <Scores />
+        <AiSection />
+        <Pricing />
+        <CommunityPreview />
+        <CtaSection />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }
