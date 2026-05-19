@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "MetaTerminal",
-  description: "Trader Safety & Behavioral Risk Operating System",
+  title: "MetaTerminal — The Performance OS for Serious Traders",
+  description:
+    "Join thousands of traders using MetaTerminal to track performance, learn from AI, and build discipline — all in one place.",
+  keywords: ["trading", "performance", "AI", "forex", "crypto", "stocks", "futures", "options"],
+  openGraph: {
+    title: "MetaTerminal — The Performance OS for Serious Traders",
+    description: "AI-powered trading performance platform. Track scores, learn from AI, build discipline.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -14,15 +20,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta name="theme-color" content="#121116" />
-      </head>
-      <body className="bg-background text-white antialiased">
-        <Navbar />
-        {/* pt-[58px] offsets the fixed navbar so content isn't hidden beneath it */}
-        <div className="pt-[58px]">
-          {children}
-        </div>
+      <body className="bg-brand-deeper text-brand-offwhite antialiased">
+        {children}
       </body>
     </html>
   );
